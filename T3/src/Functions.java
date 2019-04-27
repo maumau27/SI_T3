@@ -35,4 +35,71 @@ public class Functions {
 		
 		return par_digitos;
 	}
+	
+	public static boolean Validar_Padrao_Senha(int senha)
+	{
+		char[] senha_array = Integer.toString(senha).toCharArray();
+		
+		if(senha_array.length < 6 || senha_array.length > 8 )
+		{
+			System.out.println("Tamanha da senha invalido");
+			return false;
+		}
+		
+		
+		int last_value = -2;
+		int next_value = -2;
+		int i = 0;
+		for (char c : senha_array) {
+			int value = Character.getNumericValue(c);
+			
+			//numeros consecutivos duplicados
+			if(last_value == value)
+			{
+				System.out.println("Senha fora do padrão");
+				return false;
+			}
+			
+			if(i + 1 >= senha_array.length)
+				next_value = -2;
+			else
+				next_value = senha_array[i + 1];
+			//sequencia de numeros de 3
+			if(last_value + 1 == value && value + 1 == next_value)
+			{
+				System.out.println("Senha fora do padrão");
+				return false;
+			}
+			
+			last_value = value;
+			i++;
+		}
+		
+		
+		return true;
+	}
+	
+	public static String Byte_to_Hex(byte[] bytes) 
+	{
+		StringBuffer buf = new StringBuffer();
+		
+		for(int i = 0; i < bytes.length; i++) {
+	       String hex = Integer.toHexString(0x0100 + (bytes[i] & 0x00FF)).substring(1);
+	       buf.append((hex.length() < 2 ? "0" : "") + hex);
+	    }
+		
+		return buf.toString();
+	}
+	
+	public static byte[] Hex_to_Byte(String hex)
+	{
+		byte[] val = new byte[hex.length() / 2];
+		for (int i = 0; i < val.length; i++) {
+		   int index = i * 2;
+		   int j = Integer.parseInt(hex.substring(index, index + 2), 16);
+		   val[i] = (byte) j;
+		}
+		
+		return val;
+	}
 }

@@ -1,17 +1,35 @@
 import java.io.File;
+import java.security.MessageDigest;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import javax.crypto.Cipher;
 import javax.xml.bind.DataBindingException;
 
 public class Autentificador {
 	
-	private enum State { EMAIL, SENHA, CHAVE_PRIVADA }
+	private static Autentificador instance;
+	
+	public static Autentificador getInstance()
+	{
+		if(instance == null)
+			instance = new Autentificador();
+		return instance;
+	}
+	
+	private enum State { EMAIL, SENHA, CHAVE_PRIVADA, BLOQUEADO }
 	private State current_state = State.EMAIL;
 	
 	private int id;
 	
 	private int erros_senha = 3;
 	private int erros_chave_privada = 3;
+	
+	private String email_format = ".*@.*\\..*";
+	private Pattern email_pattern = Pattern.compile(email_format);
 	
 	public void Iniciar_Validacao()
 	{
@@ -25,7 +43,18 @@ public class Autentificador {
 	{
 		//se não está no estado de email, falha a validação
 		if(current_state != State.EMAIL)
+		{
+			System.out.println("Estado do Autentificador Invalido");
 			return false;
+		}
+		
+		//checar se não existem ' no email e se ele está num formato aceitavel
+		Matcher m = email_pattern.matcher(email);
+		if(!m.find() || email.contains("'"))
+		{
+			System.out.println("Formato invalido de email");
+			return false;
+		}
 		
 		id = BD.Get_Id_by_Email(email);
 		
@@ -44,7 +73,10 @@ public class Autentificador {
 	{
 		//se não está no estado de senha, falha a validação
 		if(current_state != State.SENHA)
+		{
+			System.out.println("Estado do Autentificador Invalido");
 			return false;
+		}
 		
 		//valida a senha
 		int senha = BD.Get_Senha_by_Id(id);
@@ -53,10 +85,7 @@ public class Autentificador {
 		
 		if(senha_array.length != par_digitos.size())
 		{
-			System.out.println("Acesso Negado : Tamanho da Senha Invalido");
-			erros_senha -= 1;
-			if(erros_senha <= 0)
-				System.out.println("Usuario Bloqueado : Numero de tentativas maximo execidida");//bloquear o usuario
+			Senha_Invalida();
 			return false;
 		}
 		
@@ -66,10 +95,7 @@ public class Autentificador {
 
 			if(!par_digitos.get(i).Match(valor))
 			{
-				System.out.println("Acesso Negado : Senha Invalida!");
-				erros_senha -= 1;
-				if(erros_senha <= 0)
-					System.out.println("Usuario Bloqueado : Numero de tentativas maximo execidida");//bloquear o usuario
+				Senha_Invalida();
 				return false;
 			}
 			
@@ -81,11 +107,49 @@ public class Autentificador {
 		return true;
 	}
 	
+	private void Senha_Invalida()
+	{
+		System.out.println("Acesso Negado : Senha Invalida!");
+		erros_senha -= 1;
+		if(erros_senha <= 0)
+		{
+			System.out.println("Usuario Bloqueado : Numero de tentativas maximo execidida");//bloquear o usuario
+			current_state = State.BLOQUEADO;
+		}
+	}
+	
+	public String Cryptografar_Senha(int senha, PrivateKey private_key)
+	{
+		byte[] senha_crypto = null;
+		//cryptografar senha
+		
+		return Functions.Byte_to_Hex(senha_crypto);
+	}
+	
+	public int Decryptografar_Senha(StringBuffer senha_crypto_hex, PublicKey public_key)
+	{
+		//decriptografar a senha
+		String senha_crypto_hex_string = senha_crypto_hex.toString();
+		byte[] senha_crypto_byte = new byte[senha_crypto_hex_string.length() / 2];
+		
+		int senha = 0;
+		
+		return senha;
+	}
+	
 	public boolean Validar_ChavePrimaria(File chave_privada)
 	{
 		//se não está no estado de chave_privada, falha a validação
 		if(current_state != State.CHAVE_PRIVADA)
+		{
+			System.out.println("Estado do Autentificador Invalido");
 			return false;
+		}
 		return false;
+	}
+	
+	public void Efetuar_Login()
+	{
+		
 	}
 }
