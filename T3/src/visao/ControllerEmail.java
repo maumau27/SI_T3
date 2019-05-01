@@ -30,9 +30,9 @@ public class ControllerEmail {
 		ie.getSend().addActionListener( new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	        	String text = ie.getTf().getText();
-	            boolean validate = Autentificador.getInstance().Validar_Email(text);
+	            int validate = Autentificador.getInstance().Validar_Email(text);
 	            
-	            if (validate) {
+	            if (validate == 1) {
 	            	ie.getArea().dispose();
 	            	ControllerPassword cp = new ControllerPassword();
 	            	cp.callInterfacePassword();	            	

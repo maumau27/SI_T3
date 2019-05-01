@@ -1,5 +1,7 @@
 package visao;
 
+import model.BD;
+
 public class MainInterface {
 
 	public static void main(String[] args) {
@@ -8,7 +10,7 @@ public class MainInterface {
 		//InterfaceEmail e = new InterfaceEmail();
 		
 		
-		
+		BD.Estabelecer_Conexao();
 		ControllerEmail ce = new ControllerEmail();
 		
 		ce.callInterfaceEmail();

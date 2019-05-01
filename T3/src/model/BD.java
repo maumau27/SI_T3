@@ -6,7 +6,7 @@ import java.sql.Statement;
 
 public class BD {
 	
-	static String url = "jdbc:mysql://localhost:3306/testebd?useTimezone=true&serverTimezone=UTC";
+	static String url = "jdbc:mysql://localhost:3306/testbd?useTimezone=true&serverTimezone=UTC";
 	static String user = "root";
 	static String password  = "";
 	

@@ -42,14 +42,14 @@ public class Autentificador {
 	
 	public int Validar_Email(String email)
 	{
-		//se não está no estado de email, falha a validação
+		//se nï¿½o estï¿½ no estado de email, falha a validaï¿½ï¿½o
 		if(current_state != State.EMAIL)
 		{
 			System.out.println("Estado do Autentificador Invalido");
 			return -1;
 		}
 		
-		//checar se não existem ' no email e se ele está num formato aceitavel
+		//checar se nï¿½o existem ' no email e se ele estï¿½ num formato aceitavel
 		Matcher m = email_pattern.matcher(email);
 		if(!m.find() || email.contains("'"))
 		{
@@ -72,7 +72,7 @@ public class Autentificador {
 
 	public int Validar_Senha(ArrayList<Par_Digitos> par_digitos)
 	{
-		//se não está no estado de senha, falha a validação
+		//se nï¿½o estï¿½ no estado de senha, falha a validaï¿½ï¿½o
 		if(current_state != State.SENHA)
 		{
 			System.out.println("Estado do Autentificador Invalido");
@@ -140,7 +140,7 @@ public class Autentificador {
 	
 	public int Validar_ChavePrimaria(File chave_privada)
 	{
-		//se não está no estado de chave_privada, falha a validação
+		//se nï¿½o estï¿½ no estado de chave_privada, falha a validaï¿½ï¿½o
 		if(current_state != State.CHAVE_PRIVADA)
 		{
 			System.out.println("Estado do Autentificador Invalido");

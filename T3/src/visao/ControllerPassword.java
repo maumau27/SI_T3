@@ -40,8 +40,7 @@ public class ControllerPassword {
 	public void addValueAndActionToButton(InterfacePassword ip) {
 		int n1 , n2 = 0;
 		ArrayList<Par_Digitos> digitos = Functions.Gerar_Set_Pares();
-		for (int i = 0 ; i < ip.getButtons().size() ; i++) {
-            atualValues.add(digitos.get(i));
+		for (int i = 0 ; i < ip.getButtons().size() ; i++) {          
 			n1 = digitos.get(i).n1;
 			n2 = digitos.get(i).n2;
 			JButton button = ip.getButtons().get(i);
@@ -62,6 +61,15 @@ public class ControllerPassword {
 			});
 	}
 	
+	public void getValueBottom(JButton button) {
+		String text = button.getText().replace("|", "");
+		int n1 = Character.getNumericValue(text.charAt(0));
+		int n2 = Character.getNumericValue(text.charAt(1));
+		Par_Digitos par = new Par_Digitos(n1, n2);
+		atualValues.add(par);
+		
+	}
+	
 	public void addActButtonNumbers(JButton button , InterfacePassword i) {
 
 		button.addActionListener( new ActionListener() {
@@ -69,6 +77,7 @@ public class ControllerPassword {
         {	     
 			numberClicks++;
 			if ( numberClicks <= 5) {
+			getValueBottom(button);
             addValueAndActionToButton(i);
             i.getScreen().revalidate();
 			} else {
@@ -82,16 +91,12 @@ public class ControllerPassword {
 		i.getSend().addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				boolean validarSenha = Autentificador.getInstance().Validar_Senha(atualValues);
+				int validarSenha = Autentificador.getInstance().Validar_Senha(atualValues);
 				
-				if ( Autentificador.getInstance().Current_State_Blocked()) {
+				if ( validarSenha == -2) {
 					i.getScreen().dispose();
 					ControllerEmail ce =  new ControllerEmail();
 					ce.callInterfaceEmail();				
-				}
-				
-				if (validarSenha) {
-					
 				}
 			}
 		});
