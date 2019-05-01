@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import model.Autentificador;
+
 public class InterfaceEmail{
 
 	private JFrame area;
@@ -36,12 +38,10 @@ public class InterfaceEmail{
 	public void addButtonSend() {
 		send = new JButton("Send");
 		panel.add(send);
-		addActSend();
 	}
 	public void addButtonReset() {
 		reset = new JButton("Reset");
 		panel.add(reset);
-		addActReset();
 	}
 	
 	public void createLabelArea()
@@ -50,33 +50,63 @@ public class InterfaceEmail{
       addButtonSend();
       addButtonReset();
       addPanel();
-      setVisible();
 
 	}
 	public void addPanel() {
-		area.getContentPane().add(BorderLayout.SOUTH , panel);
+		area.getContentPane().add(BorderLayout.CENTER , panel);
 	}
 	
 	public void setVisible() {
 		area.setVisible(true);
 	}
 	
-	public void addActSend() {
-		send.addActionListener( new ActionListener() {
-	        public void actionPerformed(ActionEvent e) {
-	        	String text = tf.getText();
-	                if (text.equals("") || !text.contains("@") || !text.contains(".com")) {
-	                	JOptionPane.showMessageDialog(null, "Invalid email");
-	                }
-	        }
-	});
+
+	public JFrame getArea() {
+		return area;
 	}
-	public void addActReset() {
-		reset.addActionListener( new ActionListener() {
-	        public void actionPerformed(ActionEvent e) {
-	                tf.setText("");
-	        }
-	});
+
+	public void setArea(JFrame area) {
+		this.area = area;
+	}
+
+	public JPanel getPanel() {
+		return panel;
+	}
+
+	public void setPanel(JPanel panel) {
+		this.panel = panel;
+	}
+
+	public JTextField getTf() {
+		return tf;
+	}
+
+	public void setTf(JTextField tf) {
+		this.tf = tf;
+	}
+
+	public JLabel getTextLabel() {
+		return textLabel;
+	}
+
+	public void setTextLabel(JLabel textLabel) {
+		this.textLabel = textLabel;
+	}
+
+	public JButton getSend() {
+		return send;
+	}
+
+	public void setSend(JButton send) {
+		this.send = send;
+	}
+
+	public JButton getReset() {
+		return reset;
+	}
+
+	public void setReset(JButton reset) {
+		this.reset = reset;
 	}
 }
 

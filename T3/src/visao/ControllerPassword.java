@@ -3,17 +3,24 @@ package visao;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.Thread.State;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-public class ControllerInterface {
+import model.Autentificador;
+import model.Functions;
+import model.Par_Digitos;
+
+public class ControllerPassword {
 
 	private int numberClicks = 0;
+	private ArrayList<Par_Digitos> atualValues;
 	
 	public void callInterfacePassword() {
 		InterfacePassword ip = new InterfacePassword(5);
+		atualValues = new ArrayList<Par_Digitos>(5);
 		addValueAndActionToButton(ip);
 		AddActButtonSend(ip);
 		addActResetButton(ip);
@@ -29,16 +36,12 @@ public class ControllerInterface {
 		button.setPreferredSize(new Dimension(80,80));
 	}
 	
-	public void addPassword(InterfacePassword ip , String text) {
-		
-		ip.getPassword().setText(ip.getPassword().getText() + "(" + text + ")");
-	}
-	
 	
 	public void addValueAndActionToButton(InterfacePassword ip) {
 		int n1 , n2 = 0;
 		ArrayList<Par_Digitos> digitos = Functions.Gerar_Set_Pares();
 		for (int i = 0 ; i < ip.getButtons().size() ; i++) {
+            atualValues.add(digitos.get(i));
 			n1 = digitos.get(i).n1;
 			n2 = digitos.get(i).n2;
 			JButton button = ip.getButtons().get(i);
@@ -54,7 +57,7 @@ public class ControllerInterface {
 			public void actionPerformed(ActionEvent e)
 	        {	     
 				numberClicks = 0;
-				i.getPassword().setText("");
+				atualValues = new ArrayList<Par_Digitos>(5);
 	        }
 			});
 	}
@@ -66,7 +69,6 @@ public class ControllerInterface {
         {	     
 			numberClicks++;
 			if ( numberClicks <= 5) {
-            addPassword(i, button.getText());
             addValueAndActionToButton(i);
             i.getScreen().revalidate();
 			} else {
@@ -74,42 +76,22 @@ public class ControllerInterface {
 			}
         }
 		});
-	}
-	
-	public boolean comparePassword(String text , String value) {
-		text = text.replace("(", "").replace(")", "").replace("|", "");
-		int contadorNumber1 = 0;
-		int contadorNumber2 = 1;
-		if (text.length() == 10) 
-		{
-			for (int i = 0 ; i < value.length() ; i++) {
-			char n1 = text.charAt(contadorNumber1);
-			char n2 = text.charAt(contadorNumber2);
-			char valueChar = value.charAt(i);
-			if ( valueChar != n1 && valueChar != n2) {
-				return false;
-			}
-			contadorNumber1 += 2;
-			contadorNumber2 += 2;
-			
-			}
-		} else {
-			return false;
-		}
-		
-		return true;
-	}
+	}	
 	
 	public void AddActButtonSend(InterfacePassword i) {
 		i.getSend().addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				boolean correct = comparePassword(i.getPassword().getText(), "52675");
+				boolean validarSenha = Autentificador.getInstance().Validar_Senha(atualValues);
 				
-				if ( correct) {
-					JOptionPane.showMessageDialog(null, "Password Accepted");
-				} else {
-					JOptionPane.showMessageDialog(null, "Incorrect Password");
+				if ( Autentificador.getInstance().Current_State_Blocked()) {
+					i.getScreen().dispose();
+					ControllerEmail ce =  new ControllerEmail();
+					ce.callInterfaceEmail();				
+				}
+				
+				if (validarSenha) {
+					
 				}
 			}
 		});

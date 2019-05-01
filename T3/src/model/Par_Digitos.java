@@ -1,3 +1,4 @@
+package model;
 public class Par_Digitos {
 	public int n1;
 	public int n2;

@@ -19,7 +19,6 @@ public class InterfacePassword {
 	private JFrame screen;
 	private JPanel panel;
 	private ArrayList<JButton> buttons;
-	private JLabel password;
 	private JButton send;
 	private JButton reset;
 	
@@ -72,10 +71,9 @@ public class InterfacePassword {
 	public InterfacePassword(int numberButtons) {
 		screen = new JFrame("Autentication Password");
 		panel = new JPanel();
-		screen.setSize(500,400);
+		screen.setSize(500,200);
 		buttons = new ArrayList<JButton>(numberButtons);
 		send = new JButton("Send Password");
-		password = new JLabel();
 		reset = new JButton("Reset");
 		addSendButton();
 		createButtons(numberButtons);
@@ -83,16 +81,6 @@ public class InterfacePassword {
 		addPanel();
 	}
 	
-	public JLabel getPassword() {
-		return password;
-	}
-
-
-
-	public void setPassword(JLabel password) {
-		this.password = password;
-	}
-
 
 
 	public void createButtons(int numberButtons) {
@@ -105,14 +93,10 @@ public class InterfacePassword {
 	public void addSendButton() {
 		JPanel panelCommands = new JPanel();
 		JPanel passwordArea = new JPanel();
-		passwordArea.add(password);
 		panelCommands.add(send);
 		panelCommands.add(reset);
 		screen.getContentPane().add(BorderLayout.SOUTH , panelCommands);
 		screen.getContentPane().add(BorderLayout.CENTER,passwordArea);
-		//screen.add(password);
-		//password.setBounds(100,140,200,200);
-		password.setFont(new Font( "Serif", Font.BOLD + Font.ITALIC + 20 , 40) );
 	}
 
 

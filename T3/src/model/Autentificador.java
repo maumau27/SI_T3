@@ -1,3 +1,4 @@
+package model;
 import java.io.File;
 import java.security.MessageDigest;
 import java.security.PrivateKey;
@@ -56,17 +57,17 @@ public class Autentificador {
 			return false;
 		}
 		
-		id = BD.Get_Id_by_Email(email);
-		
-		if(id <= 0)
-		{
-			System.out.println("Email Invalido");
-			return false;
-		}
+//		id = BD.Get_Id_by_Email(email);
+//		
+//		if(id <= 0)
+//		{
+//			System.out.println("Email Invalido");
+//			return false;
+//		}
 		
 		System.out.println("Email Validado");
 		current_state = State.SENHA;
-		return false;
+		return true;
 	}
 
 	public boolean Validar_Senha(ArrayList<Par_Digitos> par_digitos)
@@ -118,6 +119,14 @@ public class Autentificador {
 		}
 	}
 	
+	public boolean Current_State_Blocked() {
+		
+		if (current_state == State.BLOQUEADO) {
+			return true;
+		}
+		return false;
+	}
+	
 	public String Cryptografar_Senha(int senha, PrivateKey private_key)
 	{
 		byte[] senha_crypto = null;
@@ -151,5 +160,13 @@ public class Autentificador {
 	public void Efetuar_Login()
 	{
 		
+	}
+
+	public State getCurrent_state() {
+		return current_state;
+	}
+
+	public void setCurrent_state(State current_state) {
+		this.current_state = current_state;
 	}
 }
