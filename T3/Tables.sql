@@ -25,11 +25,10 @@ create table mensagens(
 
 create table registros(
 	id int not null auto_increment,
-    data_ocorrencia datetime,
+    data_ocorrencia datetime DEFAULT CURRENT_TIMESTAMP(),
     codigo int,
     id_usuario int,
     
     primary key registros_PK(id),
-    foreign key registro_usuarios_FK(id_usuario) REFERENCES usuarios(id),
     foreign key registro_mensagens_FK(codigo) REFERENCES mensagens(codigo)
 );

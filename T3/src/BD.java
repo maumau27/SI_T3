@@ -75,4 +75,28 @@ public class BD {
 		
 		return -1;
 	}
+	
+	public static void Log(int codigo)
+	{
+		try {
+		    Statement st = connection.createStatement();
+		    ResultSet rs = st.executeQuery("INSERT INTO registros (codigo) VALUES (" + codigo + ")");
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+	}
+	
+	public static void Log(int codigo, int id_usuario)
+	{
+		try {
+		    Statement st = connection.createStatement();
+		    ResultSet rs = st.executeQuery("INSERT INTO registros (codigo, id_usuario) VALUES (" + codigo + "," + id_usuario + ")");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+	}
 }
