@@ -37,10 +37,10 @@ public class BD {
 
 	public static int Get_Id_by_Email(String email)
 	{
-		try {
-		    Statement st = connection.createStatement();
-		    ResultSet rs = st.executeQuery("SELECT id FROM usuarios WHERE Email ='" + email + "'");
+		String query = "SELECT id FROM usuarios WHERE Email ='" + email + "'";
+		ResultSet rs = Run_Query(query);
 		
+		try {
 		    if(rs.first())
 		    {
 		    	return rs.getInt(1);
@@ -58,23 +58,111 @@ public class BD {
 	
 	public static int Get_Senha_by_Id(int id)
 	{
-		try {
-		    Statement st = connection.createStatement();
-		    ResultSet rs = st.executeQuery("SELECT senha FROM usuarios WHERE id =" + id);
+		String query = "SELECT senha FROM usuarios WHERE id =" + id;
+		ResultSet rs = Run_Query(query);
 		
-		    if(rs.first())
-		    {
-		    	return rs.getInt(1);
-		    }
-		    else
-		    	return -1;
-			
-		} catch (Exception e) {
+		try {
+			if(rs.first())
+			{
+				return rs.getInt(1);
+			}
+			else
+				return -1;
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Connexão Falhou");
 		}
 		
 		return -1;
+	}
+
+	public static boolean Usuario_Existe(String login_name)
+	{
+		String query = "SELECT id FROM usuarios WHERE login_name ='" + login_name + "'";
+		ResultSet rs = Run_Query(query);
+		
+		try {
+			if(rs.first())
+				return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+		
+		return false;
+	}
+	
+	public static void Cadastrar_Usuario(String email, int grupo, int senha)
+	{
+		String query = "INSERT INTO usuario (email, senha,id_grupo) VALUES (" + email + "," + senha + "," + grupo + ",)";
+		ResultSet rs = Run_Query(query);
+	}
+	
+	public static void Cadastrar_Usuario(String email, int grupo, String senha)
+	{
+		String query = "INSERT INTO usuario (email, senha, id_grupo) VALUES (" + email + "," + senha + "," + grupo + ",)";
+		ResultSet rs = Run_Query(query);
+	}
+	
+	public static String Get_Grupo_Usuario(int id)
+	{
+		String query = "SELECT nome FROM grupo INNER JOIN usuarios ON usuarios.id_grupo = grupo.GID where usuarios.id =" + id;
+		ResultSet rs = Run_Query(query);
+		try {
+			if(rs.next())
+				return rs.getString(1);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+		
+		return null;
+	}
+	
+	public static void Adicionar_Acesso_Usuario(int id)
+	{
+		String query = "UPDATE usuarios SET total_acessos = total_acessos + 1  WHERE id =" + id;
+		ResultSet rs = Run_Query(query);
+	}
+	
+	public static void Bloquear_Usuario(int id)
+	{
+		String query = "UPDATE usuarios SET data_bloqueio = adddate(CURRENT_TIMESTAMP(), INTERVAL 2 MINUTE) WHERE id =" + id;
+		ResultSet rs = Run_Query(query);
+	}
+	
+	public static boolean Usuario_Bloqueado(int id)
+	{
+		String query = "SELECT id FROM usuarios WHERE data_bloqueio <= CURRENT_TIMESTAMP() and id =" + id;
+		ResultSet rs = Run_Query(query);
+		try {
+			if(rs.next())
+				return false;
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+		
+		return true;
+	}
+	
+	private static ResultSet Run_Query(String query)
+	{
+		try {
+		    Statement st = connection.createStatement();
+		    ResultSet rs = st.executeQuery(query);
+		    return rs;
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+		
+		return null;
 	}
 	
 	public static void Log(int codigo)

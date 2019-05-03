@@ -3,7 +3,13 @@ import java.io.File;
 import java.security.MessageDigest;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.Signature;
+import java.security.cert.X509Certificate;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,6 +38,15 @@ public class Autentificador {
 	private String email_format = ".*@.*\\..*";
 	private Pattern email_pattern = Pattern.compile(email_format);
 	
+	private Encoder encoder_64;
+	private Decoder decoder_64;
+	
+	public Autentificador()
+	{
+		encoder_64 = Base64.getEncoder();
+		decoder_64 = Base64.getDecoder();
+	}
+	
 	public void Iniciar_Validacao()
 	{
 		id = -1;
@@ -42,22 +57,26 @@ public class Autentificador {
 	
 	public int Validar_Email(String email)
 	{
-		//se nï¿½o estï¿½ no estado de email, falha a validaï¿½ï¿½o
+		//se não está no estado de email, falha a validação
 		if(current_state != State.EMAIL)
 		{
 			System.out.println("Estado do Autentificador Invalido");
 			return -1;
 		}
 		
-		//checar se nï¿½o existem ' no email e se ele estï¿½ num formato aceitavel
-		Matcher m = email_pattern.matcher(email);
-		if(!m.find() || email.contains("'"))
+		if(!Validar_Formato_Email(email))
 		{
 			System.out.println("Formato invalido de email");
 			return -1;
 		}
-		
+
 		id = BD.Get_Id_by_Email(email);
+		
+		if(BD.Usuario_Bloqueado(id))
+		{
+			System.out.println("Usuario Bloqueado");
+			return -1;
+		}
 		
 		if(id <= 0)
 		{
@@ -112,30 +131,24 @@ public class Autentificador {
 		erros_senha -= 1;
 		if(erros_senha <= 0)
 		{
-			System.out.println("Usuario Bloqueado : Numero de tentativas maximo execidida");//bloquear o usuario
+			System.out.println("Usuario Bloqueado : Numero de tentativas maximo execidida");
+			BD.Bloquear_Usuario(id);
 			current_state = State.BLOQUEADO;
 			return -2;
 		}
 		return -1;
 	}
 	
-	public String Cryptografar_Senha(int senha, PrivateKey private_key)
+	public String Cryptografar_Senha(int senha)
 	{
 		byte[] senha_crypto = null;
-		//cryptografar senha
+		String senhaString = Integer.toString(senha);
 		
-		return Functions.Byte_to_Hex(senha_crypto);
-	}
-	
-	public int Decryptografar_Senha(StringBuffer senha_crypto_hex, PublicKey public_key)
-	{
-		//decriptografar a senha
-		String senha_crypto_hex_string = senha_crypto_hex.toString();
-		byte[] senha_crypto_byte = new byte[senha_crypto_hex_string.length() / 2];
+		senhaString += Functions.Get_Random_SALT();
 		
-		int senha = 0;
+		String senhaHex = Functions.Byte_to_Hex(Gerar_Digest("SHA1", senhaString));
 		
-		return senha;
+		return senhaHex;
 	}
 	
 	public int Validar_ChavePrimaria(File chave_privada)
@@ -147,6 +160,96 @@ public class Autentificador {
 			return -1;
 		}
 		return 1;
+	}
+	
+	public boolean Validar_Formato_Email(String email)
+	{
+		//checar se não existem ' no email e se ele está num formato aceitavel
+		Matcher m = email_pattern.matcher(email);
+		if(!m.find() || email.contains("'"))
+		{
+			System.out.println("Formato invalido de email");
+			return false;
+		}
+		return true;
+	}
+	
+	public int Validar_Dados_Cadastro(String email, int grupo, int senha, int senhaConfima)
+	{
+		char[] senhaChar = Integer.toString(senha).toCharArray();
+		char[] senhaConfimaChar = Integer.toString(senhaConfima).toCharArray();
+		
+		//valida que a senha é igual a senhaConfirma
+		if(senha != senhaConfima)
+		{
+			System.out.println("Senha não bate com a confirmação");
+			return -1;
+		}
+		
+		//valida que a senha está no padrão valido de senha
+		if(!Functions.Validar_Padrao_Senha(senha))
+		{
+			System.out.println("Padrão invalido de senha");
+			return -1;
+		}
+		
+		//valida que o email do usuario é unico no sistema
+		if(BD.Usuario_Existe(email))
+		{
+			System.out.println("Usuario ja existe");
+			return -1;
+		}
+		
+		//valida que o email está num formato valido
+		if(Validar_Formato_Email(email))
+		{
+			System.out.println("Formato invalido de email");
+			return -1;
+		}
+		
+		//valida que o id_grupo existe
+		if(grupo != 1 && grupo != 2)
+		{
+			System.out.println("Grupo não existe");
+			return -1;
+		}
+		
+		return 1;
+	}
+	
+	private byte[] Gerar_Digest(String algoritmo, String dado)
+	{
+		try {
+			byte[] plainText = dado.getBytes("UTF8");
+			
+			MessageDigest messageDigest = MessageDigest.getInstance(algoritmo);
+			messageDigest.update( plainText);
+			byte [] digest = messageDigest.digest();
+			
+			return digest;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	private Signature Gerar_AssinaturaDigital(String algoritimo, PrivateKey privateKey, String data)
+	{
+		Signature sig = null;
+		byte[] plain_text = null;
+		try {
+			plain_text = data.getBytes("UTF8");
+			sig = Signature.getInstance(algoritimo);
+			sig.initSign(privateKey);
+			sig.update(plain_text);
+			byte[] signature = sig.sign();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return sig;
 	}
 	
 	public void Efetuar_Login()

@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class Functions {
 
+	private static long seed = 35246875;
 	
 	public static ArrayList<Par_Digitos> Gerar_Set_Pares()
 	{
@@ -54,6 +55,7 @@ public class Functions {
 		for (char c : senha_array) {
 			int value = Character.getNumericValue(c);
 			
+			
 			//numeros consecutivos duplicados
 			if(last_value == value)
 			{
@@ -64,7 +66,7 @@ public class Functions {
 			if(i + 1 >= senha_array.length)
 				next_value = -2;
 			else
-				next_value = senha_array[i + 1];
+				next_value = Character.getNumericValue(senha_array[i + 1]);
 			//sequencia de numeros de 3
 			if(last_value + 1 == value && value + 1 == next_value)
 			{
@@ -78,6 +80,23 @@ public class Functions {
 		
 		
 		return true;
+	}
+	
+	public static String Get_Random_SALT()
+	{
+		String alfabeto = "abcdefghijklmnopqrstuvywxzABCDEFGHIJKLMNOPQRSTUVYWXZ0123456789";
+		
+		Random rnd = new Random();
+		rnd.setSeed(seed);
+		
+		String SALT = "";
+		
+		for(int i = 0; i < 10; i++)
+		{
+			SALT += alfabeto.charAt(rnd.nextInt(alfabeto.length()));
+		}
+		
+		return SALT;
 	}
 	
 	public static String Byte_to_Hex(byte[] bytes) 
