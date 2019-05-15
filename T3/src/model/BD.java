@@ -1,12 +1,14 @@
 package model;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class BD {
 	
-	static String url = "jdbc:mysql://localhost:3306/testbd?useTimezone=true&serverTimezone=UTC";
+	static String url = "jdbc:mysql://localhost:3306/testebd?useTimezone=true&serverTimezone=UTC";
 	static String user = "root";
 	static String password  = "";
 	
@@ -37,13 +39,15 @@ public class BD {
 
 	public static int Get_Id_by_Email(String email)
 	{
-		try {
-		    Statement st = connection.createStatement();
-		    ResultSet rs = st.executeQuery("SELECT id FROM usuarios WHERE Email ='" + email + "'");
+		String query = "SELECT id FROM usuarios WHERE login_name ='" + email + "'";
+		ResultSet rs = Run_Query(query);
 		
+		try {
 		    if(rs.first())
 		    {
-		    	return rs.getInt(1);
+		    	int value = rs.getInt(1);
+		    	rs.close();
+		    	return value;
 		    }
 		    else
 		    	return -1;
@@ -56,32 +60,262 @@ public class BD {
 		return -1;
 	}
 	
-	public static int Get_Senha_by_Id(int id)
+	public static String Get_Senha_by_Id(int id)
 	{
-		try {
-		    Statement st = connection.createStatement();
-		    ResultSet rs = st.executeQuery("SELECT senha FROM usuarios WHERE id =" + id);
+		String query = "SELECT senha FROM usuarios WHERE id =" + id;
+		ResultSet rs = Run_Query(query);
 		
-		    if(rs.first())
-		    {
-		    	return rs.getInt(1);
-		    }
-		    else
-		    	return -1;
-			
+		try {
+			if(rs.first())
+			{
+				String value = rs.getString(1);
+		    	rs.close();
+		    	return value;
+			}
+			else
+				return null;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+		
+		return null;
+	}
+	
+	public static String Get_Salt_by_Id(int id)
+	{
+		String query = "SELECT SALT FROM usuarios WHERE id =" + id;
+		ResultSet rs = Run_Query(query);
+		
+		try {
+			if(rs.first())
+			{
+				String value = rs.getString(1);
+				rs.close();
+				return value;
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+		
+		return null;
+	}
+
+	public static boolean Usuario_Existe(String login_name)
+	{
+		String query = "SELECT id FROM usuarios WHERE login_name ='" + login_name + "'";
+		ResultSet rs = Run_Query(query);
+		
+		try {
+			if(rs.first())
+			{
+				rs.close();
+				return true;
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+		
+		return false;
+	}
+
+	public static void Cadastrar_Usuario(String email, String nome, String certificado_digital, String SALT, int grupo, String senha)
+	{
+		String query = "INSERT INTO usuarios (login_name, nome, certificado_digital, SALT, senha, id_grupo) VALUES ('" +
+				email + "','" + nome + "','" + certificado_digital + "','" + SALT + "','" + senha + "'," + grupo +  ")";
+		try {
+			PreparedStatement pstmt = connection.prepareStatement(query);
+		    pstmt.executeUpdate();
+		    pstmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static String Get_Grupo_Usuario(int id)
+	{
+		String query = "SELECT grupos.nome FROM grupos INNER JOIN usuarios ON usuarios.id_grupo = grupos.GID where usuarios.id =" + id;
+		ResultSet rs = Run_Query(query);
+		try {
+			if(rs.next())
+			{
+				String value = rs.getString(1);
+				rs.close();
+				return value;
+			}
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Connexão Falhou");
 		}
 		
-		return -1;
+		return null;
+	}
+	
+	public static String Get_Certificado_Digital_Usuario(int id)
+	{
+		String query = "SELECT certificado_digital FROM usuarios where id=" + id;
+		ResultSet rs = Run_Query(query);
+		
+		try {
+			if(rs.next())
+			{
+				String value = rs.getString(1);
+				rs.close();
+				return value;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public static void Atualizar_Certificado_Usuario(int id, String certificado_digital)
+	{
+		String query = "UPDATE usuarios SET certificado_digital = '" + certificado_digital + "'  WHERE id =?";
+		try {
+		    PreparedStatement pstmt = connection.prepareStatement(query);
+		    pstmt.setInt(1, id);
+		    pstmt.executeUpdate();
+		    pstmt.close();
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+	}
+	
+	public static void Atualizar_Senha_Usuario(int id, String senha, String SALT)
+	{
+		String query = "UPDATE usuarios SET senha = " + senha + " AND SALT ='" + SALT + "'  WHERE id =?";
+		try {
+		    PreparedStatement pstmt = connection.prepareStatement(query);
+		    pstmt.setInt(1, id);
+		    pstmt.executeUpdate();
+		    pstmt.close();
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+	}
+	
+	public static void Adicionar_Acesso_Usuario(int id)
+	{
+		String query = "UPDATE usuarios SET total_acessos = total_acessos + 1  WHERE id =?";
+		try {
+		    PreparedStatement pstmt = connection.prepareStatement(query);
+		    pstmt.setInt(1, id);
+		    pstmt.executeUpdate();
+		    pstmt.close();
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+	}
+	
+	public static int Numero_Acessos_Usuario(int id)
+	{
+		String query = "SELECT count(id) FROM registros WHERE codigo = 4003 AND id_usuario ="+id;
+		ResultSet rs = Run_Query(query);
+		try {
+		    if(rs.next())
+		    {
+		    	int value = rs.getInt(1);
+		    	rs.close();
+		    	return value;
+		    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+		
+		return 0;
+	}
+	
+	public static int Total_Usuarios_Sistema()
+	{
+		String query = "SELECT count(id) FROM usuarios";
+		ResultSet rs = Run_Query(query);
+		try {
+		    if(rs.next())
+		    {
+		    	int value = rs.getInt(1);
+		    	rs.close();
+		    	return value;
+		    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+		
+		return 0;
+	}
+	
+	public static void Bloquear_Usuario(int id)
+	{
+		String query = "UPDATE usuarios SET data_bloqueio = adddate(CURRENT_TIMESTAMP(), INTERVAL 2 MINUTE) WHERE id =?";
+		try {
+		    PreparedStatement pstmt = connection.prepareStatement(query);
+		    pstmt.setInt(1, id);
+		    pstmt.executeUpdate();
+		    pstmt.close();
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+	}
+	
+	public static boolean Usuario_Bloqueado(int id)
+	{
+		String query = "SELECT id FROM usuarios WHERE data_bloqueio <= CURRENT_TIMESTAMP() AND id =" + id;
+		ResultSet rs = Run_Query(query);
+		try {
+			if(rs.next())
+			{
+				rs.close();
+				return false;
+			}
+					
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+
+		return true;
+	}
+	
+	private static ResultSet Run_Query(String query)
+	{
+		try {
+		    Statement st = connection.createStatement();
+		    ResultSet rs = st.executeQuery(query);
+		    return rs;
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+		
+		return null;
 	}
 	
 	public static void Log(int codigo)
 	{
 		try {
-		    Statement st = connection.createStatement();
-		    ResultSet rs = st.executeQuery("INSERT INTO registros (codigo) VALUES (" + codigo + ")");
+			String query = "INSERT INTO registros (codigo) VALUES (" + codigo + ")";
+			PreparedStatement pstmt = connection.prepareStatement(query);
+		    pstmt.executeUpdate();
+		    pstmt.close();
 		
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -89,12 +323,28 @@ public class BD {
 		}
 	}
 	
-	public static void Log(int codigo, int id_usuario)
+	public static void Log(int codigo, String login_name)
 	{
 		try {
-		    Statement st = connection.createStatement();
-		    ResultSet rs = st.executeQuery("INSERT INTO registros (codigo, id_usuario) VALUES (" + codigo + "," + id_usuario + ")");
-			
+		    String query = "INSERT INTO registros (codigo, login_name) VALUES (" + codigo + ",'" + login_name + "')";
+			PreparedStatement pstmt = connection.prepareStatement(query);
+		    pstmt.executeUpdate();
+		    pstmt.close();
+		    
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+	}
+	
+	public static void Log(int codigo, String login_name, String fileName)
+	{
+		try {
+		    String query = "INSERT INTO registros (codigo, login_name, file_name) VALUES (" + codigo + ",'" + login_name + "','" + fileName + "')";
+			PreparedStatement pstmt = connection.prepareStatement(query);
+		    pstmt.executeUpdate();
+		    pstmt.close();
+		    
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Connexão Falhou");

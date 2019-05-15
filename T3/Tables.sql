@@ -1,9 +1,14 @@
 create table usuarios (
 	id int not null auto_increment,
-    email varchar(255) unique not null,
-	certificado_digital varchar(255),
-    senha int(8) not null,
+    login_name varchar(255) unique not null,
+    nome varchar(255) not null,
+	certificado_digital varchar(4000),
+    senha varchar(100) not null,
+    -- senha int(8) not null,
+	SALT varchar(10) not null,
     id_grupo int not null,
+    data_bloqueio datetime not null DEFAULT CURRENT_TIMESTAMP(),
+    total_acessos int default 0,
     
     primary key usuario_PK(id),
     foreign key usuarios_grupo_FK(id_grupo) REFERENCES grupos(GID)
@@ -25,9 +30,11 @@ create table mensagens(
 
 create table registros(
 	id int not null auto_increment,
-    data_ocorrencia datetime DEFAULT CURRENT_TIMESTAMP(),
+    data_ocorrencia datetime not null DEFAULT CURRENT_TIMESTAMP(),
     codigo int,
     id_usuario int,
+	login_name varchar(255),
+    file_name varchar(255),
     
     primary key registros_PK(id),
     foreign key registro_mensagens_FK(codigo) REFERENCES mensagens(codigo)
