@@ -1,10 +1,12 @@
 package model;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Functions {
-
-	private static long seed = 35246875;
 	
 	public static ArrayList<Par_Digitos> Gerar_Set_Pares()
 	{
@@ -87,7 +89,6 @@ public class Functions {
 		String alfabeto = "abcdefghijklmnopqrstuvywxzABCDEFGHIJKLMNOPQRSTUVYWXZ0123456789";
 		
 		Random rnd = new Random();
-		rnd.setSeed(seed);
 		
 		String SALT = "";
 		
@@ -97,6 +98,17 @@ public class Functions {
 		}
 		
 		return SALT;
+	}
+	
+	public static byte[] Random_Byte_Array(int size)
+	{
+		Random rnd = new Random();
+		StringBuffer sb = new StringBuffer();
+		byte[] random_bytes = new byte[size];
+		
+		rnd.nextBytes(random_bytes);
+		
+		return random_bytes;
 	}
 	
 	public static String Byte_to_Hex(byte[] bytes) 
