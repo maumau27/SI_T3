@@ -14,15 +14,13 @@ public class ControllerEmail {
 		InterfaceEmail ie = new InterfaceEmail();
 		Autentificador.getInstance().Iniciar_Validacao();
 		addActs(ie);
-		
+		ie.setVisible();
 	}
 	
 	
 	public void addActs(InterfaceEmail ie) {
 		addActSend(ie);
-		addActReset(ie);
-		ie.setVisible();
-		
+		addActReset(ie);		
 	}
 	
 	
