@@ -26,6 +26,7 @@ public class Usuario {
 		instance = user;
 	}
 
+	private int id;
 	private String nome;
 	private String email;
 	private X509Certificate certificado_digital;
@@ -33,8 +34,9 @@ public class Usuario {
 	private PrivateKey privateKey;
 	private PublicKey publicKey;
 
-	public Usuario(String nome, String email, X509Certificate certificado_digital, String grupo, PrivateKey privateKey)
+	public Usuario(int id, String nome, String email, X509Certificate certificado_digital, String grupo, PrivateKey privateKey)
 	{
+		this.id = id;
 		this.certificado_digital = certificado_digital;
 		this.nome = nome;
 		this.email = email;
@@ -51,9 +53,11 @@ public class Usuario {
 
 		//decripta o envelope digital para recuperar a semente
 		try {
-			Cipher cipher = Cipher.getInstance("RSA");
+			Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 			cipher.init(Cipher.DECRYPT_MODE, privateKey);
 			byte[] seed = cipher.doFinal(envelope_digital);
+			
+			System.out.println(Autentificador.getInstance().Byte_to_String(seed));
 
 			KeyGenerator keyGenerator = KeyGenerator.getInstance("DES");
 			SecureRandom secureRandom = new SecureRandom(seed);
@@ -68,6 +72,7 @@ public class Usuario {
 			cipher.init(Cipher.DECRYPT_MODE, secretKey);
 			byte[] index_data_bytes = cipher.doFinal(index_crypt);
 			String index_data = Autentificador.getInstance().Byte_to_String(index_data_bytes);
+			System.out.println(index_data);
 		
 			Signature sig = Autentificador.getInstance().Gerar_AssinaturaDigital("MD5withRSA");
 			byte[] signature = null;
@@ -106,7 +111,7 @@ public class Usuario {
 					PrintWriter out = new PrintWriter(arquivo.Get_Path() + "\\" + arquivo.Get_NomeSecreto());
 					out.println(file_data);
 					out.close();
-					System.out.print("Arquivo Decriptado e Salvo com Sucesso!");
+					System.out.println("Arquivo Decriptado e Salvo com Sucesso!");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -145,5 +150,25 @@ public class Usuario {
 		if(arquivo.Get_Dono().equals(email) || arquivo.Get_Grupo().equals(grupo))
 	      return true;
 		return false;
+	}
+	
+	public String Get_Nome()
+	{
+		return nome;
+	}
+	
+	public String Get_Email()
+	{
+		return email;
+	}
+	
+	public String Get_Grupo()
+	{
+		return grupo;
+	}
+	
+	public int Get_Acessos()
+	{
+		return BD.Numero_Acessos_Usuario(id);
 	}
 }

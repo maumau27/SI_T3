@@ -25,14 +25,16 @@ public class Main {
 		Autentificador.getInstance().Iniciar_Validacao();
 		Autentificador.getInstance().Validar_Email("user01@inf1416.puc-rio.br");
 		Autentificador.getInstance().Validar_Senha(par_digitos);
-		Autentificador.getInstance().Validar_ChavePrivada(path, "user011");
+		Autentificador.getInstance().Validar_ChavePrivada(path, "user01");
 		
 		Usuario user = Usuario.getInstance();
 		if(user != null)
 		{
 			path = "C:\\Users\\Maurício\\Desktop\\Puc\\Segurança Da Informação\\SI_T3\\T3\\Pacote-T3\\Files";
 			ArrayList<Arquivo> arquivos = user.Parse_Index(path);
+			System.out.println(arquivos.get(0).Get_NomeCodigo());
 			user.Decriptar_Arquivo(arquivos.get(0));
+			//user.Decriptar_Arquivo(arquivos.get(1));
 		}
 		
 		/*String path = "C:\\Users\\Maurício\\Desktop\\Puc\\Segurança Da Informação\\SI_T3\\T3\\Pacote-T3\\Keys\\admin-x509.crt";

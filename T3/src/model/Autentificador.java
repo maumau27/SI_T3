@@ -697,7 +697,7 @@ public class Autentificador {
     
 	public void Efetuar_Login()
 	{
-		Usuario user = new Usuario(Recuperar_Nome_Certificado(ceritificadoDigital), 
+		Usuario user = new Usuario(id, Recuperar_Nome_Certificado(ceritificadoDigital), 
 								   Recuperar_Email_Certificado(ceritificadoDigital), 
 								   ceritificadoDigital, 
 								   BD.Get_Grupo_Usuario(id), 
