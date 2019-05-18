@@ -9,6 +9,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
+import model.BD;
+import model.Usuario;
+
 public class ControleCadastro {
 
 	
@@ -26,6 +29,7 @@ public class ControleCadastro {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				BD.Log(6007, Usuario.getInstance().Get_Email());
 				ic.getMenu().dispose();
 				ControleMenu cm = new ControleMenu();
 				cm.callMenu();

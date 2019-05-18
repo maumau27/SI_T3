@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -17,6 +19,9 @@ import javax.swing.text.Position;
 import javax.swing.text.Segment;
 import javax.swing.undo.UndoableEdit;
 
+import model.Autentificador;
+import model.BD;
+
 public class InterfaceCertificado {
 
 	JFrame screen;
@@ -29,6 +34,8 @@ public class InterfaceCertificado {
 	
 	
 	public InterfaceCertificado() {
+		BD.Log(4001, Autentificador.getInstance().Get_LoginName());
+	
 		screen = new JFrame("Autentication Certificate");
 		panel = new JPanel();
 		panel.setLayout(new BorderLayout());
@@ -39,6 +46,14 @@ public class InterfaceCertificado {
 		addText();
 		addSendButtom();
 		
+		screen.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+            	BD.Log(1002);
+                System.out.println("Sistema sendo fechado pelo usuario");
+                System.exit(0);
+            }
+        });
 	}
 	
 	

@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
+import model.BD;
+import model.Usuario;
+
 public class ControleAlterarSenha {
 
 	
@@ -22,6 +25,8 @@ public class ControleAlterarSenha {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				BD.Log(7006, Usuario.getInstance().Get_Email());
+				
 				ia.getMenu().dispose();
 				ControleMenu cm = new ControleMenu();
 				cm.callMenu();

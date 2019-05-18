@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
+import model.BD;
+import model.Usuario;
+
 public class ControleConsulta {
 
 	
@@ -24,7 +27,7 @@ public class ControleConsulta {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
+				BD.Log(8003, Usuario.getInstance().Get_Email());
 			}
 		});
 	}
@@ -34,6 +37,8 @@ public class ControleConsulta {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				BD.Log(8002, Usuario.getInstance().Get_Email());
+				
 				ic.getMenu().dispose();
 				ControleMenu cm = new ControleMenu();
 				cm.callMenu();

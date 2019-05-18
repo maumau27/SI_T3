@@ -32,7 +32,6 @@ public class Main {
 		{
 			path = "C:\\Users\\Maurício\\Desktop\\Puc\\Segurança Da Informação\\SI_T3\\T3\\Pacote-T3\\Files";
 			ArrayList<Arquivo> arquivos = user.Parse_Index(path);
-			System.out.println(arquivos.get(0).Get_NomeCodigo());
 			user.Decriptar_Arquivo(arquivos.get(0));
 			//user.Decriptar_Arquivo(arquivos.get(1));
 		}

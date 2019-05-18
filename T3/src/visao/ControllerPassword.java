@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import model.Autentificador;
+import model.BD;
 import model.Functions;
 import model.Par_Digitos;
 
@@ -92,6 +93,11 @@ public class ControllerPassword {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int validarSenha = Autentificador.getInstance().Validar_Senha(atualValues);
+				
+				if(validarSenha == 1)
+				{
+					BD.Log(3002, Autentificador.getInstance().Get_LoginName());
+				}
 				
 				if ( validarSenha == -2) {
 					i.getScreen().dispose();

@@ -15,6 +15,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.filechooser.FileSystemView;
 
+import model.Autentificador;
+import model.BD;
+
 public class ControleCertificado {
 
 	public void callControllerCertificado() {
@@ -72,6 +75,7 @@ public class ControleCertificado {
 				
 				// Verificar se eh adm ou usuario 
 				
+				BD.Log(4002, Autentificador.getInstance().Get_LoginName());
 				ic.getScreen().dispose();
 				ControleMenu cm = new ControleMenu();
 				cm.callMenu();

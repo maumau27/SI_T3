@@ -1,6 +1,8 @@
 package visao;
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -8,6 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import model.BD;
+import model.Usuario;
 
 public class InterfaceAlterarSenha {
 
@@ -24,6 +29,8 @@ public class InterfaceAlterarSenha {
 	
 	
 	public InterfaceAlterarSenha() {
+		BD.Log(7001, Usuario.getInstance().Get_Email());
+		
 		menu = new JFrame("Alterar Senha");
 		menu.setSize(600,600);
 		corpo2 = new JPanel();
@@ -32,6 +39,15 @@ public class InterfaceAlterarSenha {
 		AddTexts();
 		addPanelButtomToCorpo2();
 		setButtons();
+		
+		menu.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+            	BD.Log(1002);
+                System.out.println("Sistema sendo fechado pelo usuario");
+                System.exit(0);
+            }
+        });
 	}
 	
 	

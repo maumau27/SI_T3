@@ -4,10 +4,13 @@ import java.awt.Event;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
 import model.Autentificador;
+import model.BD;
 
 public class InterfaceEmail{
 
@@ -20,11 +23,22 @@ public class InterfaceEmail{
 	
 	
 	public InterfaceEmail(){
+		
+		BD.Log(2001);
+		
 		area = new JFrame("Autentication Email");
 		panel = new JPanel();
 		area.setSize(500,300);
 		createLabelArea();
 		
+		area.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+            	BD.Log(1002);
+                System.out.println("Sistema sendo fechado pelo usuario");
+                System.exit(0);
+            }
+        });
 	}
 	
 	public void addTextField() {

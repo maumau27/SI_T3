@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.LayoutManager;
 import java.awt.Point;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Locale;
 
 import javax.swing.Box;
@@ -15,6 +17,9 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import model.Autentificador;
+import model.BD;
 
 public class InterfaceMenu {
 
@@ -57,6 +62,8 @@ public class InterfaceMenu {
 	JButton button4;
 	
 	public InterfaceMenu() {
+		BD.Log(5001, Autentificador.getInstance().Get_LoginName());
+		
 		menu = new JFrame("Menu");
 		menu.setLayout(new BorderLayout());
 		menu.setSize(600,600);
@@ -67,8 +74,16 @@ public class InterfaceMenu {
 		menu.add(cabecalho , BorderLayout.NORTH);
 		menu.add(corpo1 , BorderLayout.CENTER);
 		menu.add(corpo2 , BorderLayout.SOUTH);
-		//addCabecalho();
 		
+		menu.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+            	BD.Log(1002);
+                System.out.println("Sistema sendo fechado pelo usuario");
+                System.exit(0);
+            }
+        });
+		//addCabecalho();
 	}
 	
 	public void setConfigurationsOfPanels() {

@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import model.Autentificador;
+import model.BD;
 
 public class ControllerEmail {
 
@@ -31,6 +32,7 @@ public class ControllerEmail {
 	            int validate = Autentificador.getInstance().Validar_Email(text);
 	            
 	            if (validate == 1) {
+	            	BD.Log(2002);
 	            	ie.getArea().dispose();
 	            	ControllerPassword cp = new ControllerPassword();
 	            	cp.callInterfacePassword();	            	

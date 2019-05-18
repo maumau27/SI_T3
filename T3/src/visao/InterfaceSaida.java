@@ -2,12 +2,17 @@ package visao;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import model.BD;
+import model.Usuario;
 
 public class InterfaceSaida {
 
@@ -17,6 +22,8 @@ public class InterfaceSaida {
 	private JLabel saida , msgSaida;
 	
 	public InterfaceSaida() {
+		BD.Log(9001, Usuario.getInstance().Get_Email());
+		
 		menu = new JFrame("Tela de saída");
 		menu.setSize(600,600);
 		corpo2 = new JPanel();
@@ -25,6 +32,14 @@ public class InterfaceSaida {
 		setLabels();
 		setButtons();
 		
+		menu.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+            	BD.Log(1002);
+                System.out.println("Sistema sendo fechado pelo usuario");
+                System.exit(0);
+            }
+        });
 	}
 	
 

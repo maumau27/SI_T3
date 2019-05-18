@@ -262,6 +262,7 @@ public class Autentificador {
 		{
 			JOptionPane.showMessageDialog(null, "Certificado Invalido", "Erro", JOptionPane.INFORMATION_MESSAGE);
 			System.out.println("Certificado Invalido");
+			BD.Log(6004, login_name);
 			return -1;
 		}
 		
@@ -273,6 +274,7 @@ public class Autentificador {
 		{
 			JOptionPane.showMessageDialog(null, "Senha não bate com a confirmação", "Erro", JOptionPane.INFORMATION_MESSAGE);
 			System.out.println("Senha não bate com a confirmação");
+			BD.Log(6003, login_name);
 			return -1;
 		}
 		
@@ -281,6 +283,7 @@ public class Autentificador {
 		{
 			JOptionPane.showMessageDialog(null, "Padrão invalido de senha", "Erro", JOptionPane.INFORMATION_MESSAGE);
 			System.out.println("Padrão invalido de senha");
+			BD.Log(6003, login_name);
 			return -1;
 		}
 		
@@ -289,6 +292,7 @@ public class Autentificador {
 		{
 			JOptionPane.showMessageDialog(null, "Usuario ja existe", "Erro", JOptionPane.INFORMATION_MESSAGE);
 			System.out.println("Usuario ja existe");
+			BD.Log(6006, login_name);
 			return -1;
 		}
 		
@@ -297,6 +301,7 @@ public class Autentificador {
 		{
 			JOptionPane.showMessageDialog(null, "Formato invalido de email", "Erro", JOptionPane.INFORMATION_MESSAGE);
 			System.out.println("Formato invalido de email");
+			BD.Log(6006, login_name);
 			return -1;
 		}
 		
@@ -305,10 +310,12 @@ public class Autentificador {
 		{
 			JOptionPane.showMessageDialog(null, "Grupo não existe", "Erro", JOptionPane.INFORMATION_MESSAGE);
 			System.out.println("Grupo não existe");
+			BD.Log(6006, login_name);
 			return -1;
 		}
 		
 		BD.Cadastrar_Usuario(email, nome, Recuperar_PEM_Format_Ceritficado(Ler_File(certificadoPath)), SALT, grupo, Cryptografar_Senha(senha, SALT));;
+		BD.Log(6005, login_name);
 		
 		return 1;
 	}
@@ -326,6 +333,7 @@ public class Autentificador {
 		{
 			JOptionPane.showMessageDialog(null, "Certificado Invalido", "Erro", JOptionPane.INFORMATION_MESSAGE);
 			System.out.println("Certificado Invalido");
+			BD.Log(7003, login_name);
 			valido = false;
 		}
 		else
@@ -341,6 +349,7 @@ public class Autentificador {
 			{
 				JOptionPane.showMessageDialog(null, "Senha não bate com a confirmação", "Erro", JOptionPane.INFORMATION_MESSAGE);
 				System.out.println("Senha não bate com a confirmação");
+				BD.Log(7002, login_name);
 				valido = false;
 			}
 			
@@ -349,6 +358,7 @@ public class Autentificador {
 			{
 				JOptionPane.showMessageDialog(null, "Padrão invalido de senha", "Erro", JOptionPane.INFORMATION_MESSAGE);
 				System.out.println("Padrão invalido de senha");
+				BD.Log(7002, login_name);
 				valido = false;
 			}
 			alterarSenha = true;
@@ -360,6 +370,12 @@ public class Autentificador {
 				BD.Atualizar_Senha_Usuario(id, Cryptografar_Senha(senha, SALT), SALT);
 			if(alterarCertificado)
 				BD.Atualizar_Certificado_Usuario(id, Recuperar_PEM_Format_Ceritficado(Ler_File(certificadoPath)));
+			BD.Log(7004, login_name);
+		}
+		else
+		{
+			BD.Log(7005, login_name);
+			return -1;
 		}
 		
 		return 1;
@@ -703,5 +719,10 @@ public class Autentificador {
 								   BD.Get_Grupo_Usuario(id), 
 								   privateKey);
 		Usuario.SetInstance(user);
+	}
+	
+	public String Get_LoginName()
+	{
+		return login_name;
 	}
 }

@@ -8,6 +8,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import model.Autentificador;
+import model.BD;
+import model.Usuario;
+
 public class ControleMenu {
 
 	public void callMenu() {
@@ -25,6 +29,7 @@ public class ControleMenu {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				BD.Log(5002, Usuario.getInstance().Get_Email());
 				i.getMenu().dispose();
 				ControleCadastro cc = new ControleCadastro();
 				cc.callCadastro(i.getCabecalho() , i.getCorpo1());
@@ -38,6 +43,7 @@ public class ControleMenu {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				BD.Log(5003, Usuario.getInstance().Get_Email());
 				i.getMenu().dispose();
 				ControleAlterarSenha ca = new ControleAlterarSenha();
 				ca.callAlterarSenha(i.getCabecalho(), i.getCorpo1());
@@ -51,6 +57,7 @@ public class ControleMenu {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				BD.Log(5004, Usuario.getInstance().Get_Email());
 				i.getMenu().dispose();
 				ControleConsulta cc = new ControleConsulta();
 				cc.callConsulta(i.getCabecalho(), i.getCorpo1());
@@ -64,6 +71,7 @@ public class ControleMenu {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				BD.Log(5005, Usuario.getInstance().Get_Email());
 				i.getMenu().dispose();
 				ControleSaida cs = new ControleSaida();
 				cs.callSaida(i.getCabecalho(), i.getCorpo1());

@@ -2,12 +2,17 @@ package visao;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import model.BD;
+import model.Usuario;
 
 public class InterfaceConsulta {
 
@@ -18,6 +23,8 @@ public class InterfaceConsulta {
 	
 	
 	public InterfaceConsulta() {
+		BD.Log(8001, Usuario.getInstance().Get_Email());
+		
 		menu = new JFrame();
 		menu.setLayout(new BorderLayout());
 		menu.setSize(600,600);
@@ -27,9 +34,16 @@ public class InterfaceConsulta {
 		addText();
 		setButtons();
 		
-		
-		
+		menu.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+            	BD.Log(1002);
+                System.out.println("Sistema sendo fechado pelo usuario");
+                System.exit(0);
+            }
+        });
 	}
+	
 	public void setConfigurationsOfPanels() {
 		cabecalho = new JPanel();  
 		cabecalho.setLayout(new BorderLayout());

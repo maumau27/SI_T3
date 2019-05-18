@@ -8,6 +8,9 @@ import java.sql.Statement;
 
 public class BD {
 	
+	public static final String ANSI_RED = "\u001B[31m";
+	public static final String ANSI_GREEN = "\u001B[32m";
+	
 	static String url = "jdbc:mysql://localhost:3306/testebd?useTimezone=true&serverTimezone=UTC";
 	static String user = "root";
 	static String password  = "";
@@ -350,4 +353,25 @@ public class BD {
 			System.err.println("Connexão Falhou");
 		}
 	}
+	
+	public static void Print_Logs()
+	{
+		String query = "SELECT registros.data_ocorrencia, REPLACE(REPLACE(mensagens.mensagem, '<login_name>', registros.login_name), '<arq_name>', registros.file_name) as Mensagem\r\n" + 
+				"FROM registros \r\n" + 
+				"INNER JOIN mensagens \r\n" + 
+				"ON registros.codigo = mensagens.codigo order by data_ocorrencia;";
+		ResultSet rs = Run_Query(query);
+		try {
+			while(rs.next())
+			{
+				System.out.println(rs.getString(1) + "\t" + rs.getString(2));
+			}
+			rs.close();
+					
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+	}
+	
 }

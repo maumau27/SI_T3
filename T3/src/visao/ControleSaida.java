@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
+import model.BD;
+import model.Usuario;
+
 public class ControleSaida {
 
 	public void callSaida(JPanel cabecalho , JPanel corpo1) {
@@ -24,6 +27,7 @@ public class ControleSaida {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				BD.Log(9003, Usuario.getInstance().Get_Email());
 				is.getMenu().dispose();				
 			}
 		});
@@ -34,6 +38,7 @@ public class ControleSaida {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				BD.Log(9004, Usuario.getInstance().Get_Email());
 				is.getMenu().dispose();
 				ControleMenu cm = new ControleMenu();
 				cm.callMenu();

@@ -50,14 +50,17 @@ public class Usuario {
 		byte[] index_crypt = Autentificador.getInstance().Ler_File_Bin(path + "\\" + name + ".enc");
 		byte[] envelope_digital = Autentificador.getInstance().Ler_File_Bin(path + "\\" + name + ".env");
 		byte[] assinatura_digital = Autentificador.getInstance().Ler_File_Bin(path + "\\" + name + ".asd");
-
+		
+		if(index_crypt == null || envelope_digital == null || assinatura_digital == null)
+		{
+			BD.Log(8004, email);
+		}
+		
 		//decripta o envelope digital para recuperar a semente
 		try {
 			Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 			cipher.init(Cipher.DECRYPT_MODE, privateKey);
 			byte[] seed = cipher.doFinal(envelope_digital);
-			
-			System.out.println(Autentificador.getInstance().Byte_to_String(seed));
 
 			KeyGenerator keyGenerator = KeyGenerator.getInstance("DES");
 			SecureRandom secureRandom = new SecureRandom(seed);
@@ -72,7 +75,13 @@ public class Usuario {
 			cipher.init(Cipher.DECRYPT_MODE, secretKey);
 			byte[] index_data_bytes = cipher.doFinal(index_crypt);
 			String index_data = Autentificador.getInstance().Byte_to_String(index_data_bytes);
-			System.out.println(index_data);
+			
+			if(name == "index")
+				BD.Log(8005, email);
+			else
+			{
+				BD.Log(8013, email, name);
+			}
 		
 			Signature sig = Autentificador.getInstance().Gerar_AssinaturaDigital("MD5withRSA");
 			byte[] signature = null;
@@ -84,16 +93,37 @@ public class Usuario {
 			String signature_hex = Functions.Byte_to_Hex(signature);
 			String assinatura_digital_hex = Functions.Byte_to_Hex(assinatura_digital);
 
-			//TODO - ajeitar a validação
 			if(signature_hex.equals(assinatura_digital_hex))
+			{
+				if(name == "index")
+					BD.Log(8006, email);
+				else
+				{
+					BD.Log(8014, email, name);
+				}
+				
 				return index_data;
+			}
 			else 
 			{
+				if(name == "index")
+					BD.Log(8008, email);
+				else
+				{
+					BD.Log(8016, email, name);
+				}
+				
 				JOptionPane.showMessageDialog(null, "Integridade e Autenticidade Corrompida!", "Erro", JOptionPane.ERROR_MESSAGE);
 				System.out.println("Integridade e Autenticidade Corrompida!");
 			}
 		}
 		catch (Exception e) {
+			if(name == "index")
+				BD.Log(8007, email);
+			else
+			{
+				BD.Log(8015, email, name);
+			}
 			e.printStackTrace();
 		}
 
@@ -148,7 +178,11 @@ public class Usuario {
 	public boolean Tem_Acesso(Arquivo arquivo)
 	{
 		if(arquivo.Get_Dono().equals(email) || arquivo.Get_Grupo().equals(grupo))
-	      return true;
+		{
+			BD.Log(8011, email, arquivo.Get_NomeCodigo());
+			return true;
+		}
+		BD.Log(8012, email, arquivo.Get_NomeCodigo());
 		return false;
 	}
 	

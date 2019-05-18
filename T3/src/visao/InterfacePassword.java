@@ -6,12 +6,17 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import model.Autentificador;
+import model.BD;
 
 public class InterfacePassword {
 
@@ -69,6 +74,8 @@ public class InterfacePassword {
 
 
 	public InterfacePassword(int numberButtons) {
+		BD.Log(3001, Autentificador.getInstance().Get_LoginName());
+		
 		screen = new JFrame("Autentication Password");
 		panel = new JPanel();
 		screen.setSize(500,200);
@@ -79,6 +86,15 @@ public class InterfacePassword {
 		createButtons(numberButtons);
 		addButtonsToPanel();
 		addPanel();
+		
+		screen.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+            	BD.Log(1002);
+                System.out.println("Sistema sendo fechado pelo usuario");
+                System.exit(0);
+            }
+        });
 	}
 	
 

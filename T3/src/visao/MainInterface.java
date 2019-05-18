@@ -10,14 +10,15 @@ public class MainInterface {
 		//InterfaceEmail e = new InterfaceEmail();
 		
 		
-//		BD.Estabelecer_Conexao();
+		BD.Estabelecer_Conexao();
+		BD.Log(1001);
 //		ControllerEmail ce = new ControllerEmail();
 //		
 //		ce.callInterfaceEmail();
 		
-		ControleCertificado cc = new ControleCertificado();
+		ControleMenu cc = new ControleMenu();
 		
-		cc.callControllerCertificado();
+		cc.callMenu();
 		
 //		ControleMenu cm = new ControleMenu();
 //		cm.callMenu();
