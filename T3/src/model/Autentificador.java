@@ -54,7 +54,6 @@ public class Autentificador {
 	private X509Certificate ceritificadoDigital;
 	private PrivateKey privateKey;
 	private String login_name;
-	
 	private int erros_senha = 3;
 	private int erros_chave_privada = 3;
 	
@@ -70,7 +69,6 @@ public class Autentificador {
 		decoder_64 = Base64.getDecoder();
 		Iniciar_Validacao();
 	}
-	
 	//TODO - tornar private
 	public void Iniciar_Validacao()
 	{

@@ -46,7 +46,7 @@ public class InterfacePrivateKey {
 	public InterfacePrivateKey() {
 		BD.Log(4001, Autentificador.getInstance().Get_LoginName());
 	
-		screen = new JFrame("Autentication Certificate");
+		screen = new JFrame("Autentication Private Key");
 		panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		screen.setSize(400,400);

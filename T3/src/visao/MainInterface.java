@@ -16,9 +16,9 @@ public class MainInterface {
 //		
 //		ce.callInterfaceEmail();
 		
-		ControleMenu cc = new ControleMenu();
+		ControllerEmail cc = new ControllerEmail();
 		
-		cc.callMenu();
+		cc.callInterfaceEmail();
 		
 //		ControleMenu cm = new ControleMenu();
 //		cm.callMenu();
