@@ -146,4 +146,24 @@ public class InterfaceConsulta {
 	public void setVisible() {
 		menu.setVisible(true);
 	}
+	
+	public void addArchivestoTable(ArrayList<Arquivo> arquivos) {		
+		DefaultTableModel model = new DefaultTableModel(); 
+		table = new JTable(model); 
+		String[] listRow = new String[4];
+		// Create a couple of columns 
+		model.addColumn("Nome_Codigo"); 
+		model.addColumn("Nome_Secreto");
+		model.addColumn("Dono"); 
+		model.addColumn("Grupo"); 
+
+		for (Arquivo arquivo : arquivos) {			
+			listRow[0] = arquivo.Get_NomeCodigo();
+			listRow[1] = arquivo.Get_NomeSecreto();
+			listRow[2] = arquivo.Get_Dono();
+			listRow[3] = arquivo.Get_Grupo();
+			model.addRow(listRow);
+			listRow = new String[4];
+		}
+	}
 }

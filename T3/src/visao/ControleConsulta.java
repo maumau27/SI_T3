@@ -38,8 +38,7 @@ public class ControleConsulta {
 			public void actionPerformed(ActionEvent arg0) {
 				BD.Log(8003, Usuario.getInstance().Get_Email());
 				ArrayList<Arquivo> arquivos = Usuario.getInstance().Parse_Index(ic.getCampoPasta().getText());
-				addArchivestoTable(arquivos, ic.getTable());
-				ic.addTable();
+				ic.addArchivestoTable(arquivos);
 				addActClick(ic.getTable(), arquivos);
 			}
 		});
@@ -58,26 +57,6 @@ public class ControleConsulta {
 				
 			}
 		});
-	}
-	
-	public void addArchivestoTable(ArrayList<Arquivo> arquivos , JTable table) {		
-		DefaultTableModel model = new DefaultTableModel(); 
-		table = new JTable(model); 
-		String[] listRow = new String[4];
-		// Create a couple of columns 
-		model.addColumn("Nome_Codigo"); 
-		model.addColumn("Nome_Secreto");
-		model.addColumn("Dono"); 
-		model.addColumn("Grupo"); 
-
-		for (Arquivo arquivo : arquivos) {			
-			listRow[0] = arquivo.Get_NomeCodigo();
-			listRow[1] = arquivo.Get_NomeSecreto();
-			listRow[2] = arquivo.Get_Dono();
-			listRow[3] = arquivo.Get_Grupo();
-			model.addRow(listRow);
-			listRow = new String[4];
-		}
 	}
 	
 	public void addActClick(JTable table , ArrayList<Arquivo> arquivos) {	
