@@ -16,16 +16,14 @@ public class ControleMenu {
 
 	public void callMenu() {
 		String grupo = Usuario.getInstance().Get_Grupo();
-		grupo = grupo.trim();
-		grupo = grupo.toUpperCase();
 		InterfaceMenu im = new InterfaceMenu(grupo);
-		if (grupo == "ADMINISTRADOR") {
+		if (grupo == "admnistrador") {
 			addConfigurationsAdm(im);
-		}else if (grupo == "USUARIO"){
+		}else if (grupo == "usuario"){
 			addConfigurationsUser(im);
 		}	
 		im.setVisible();
-		if (grupo == "ADMINISTRADOR")
+		if (grupo == "administrador")
 			addActBottom1(im);
 		addActBottom2(im);
 		addActBottom3(im);
@@ -90,16 +88,16 @@ public class ControleMenu {
 	}
 	
 	public void addConfigurationsAdm(InterfaceMenu i) {
-		i.getLogin().setText(Autentificador.getInstance().Get_LoginName());
-		i.getGrupo().setText(Usuario.getInstance().Get_Grupo());
-		i.getNome().setText(Usuario.getInstance().Get_Nome());
+		i.getLogin().setText(i.getLogin() + Autentificador.getInstance().Get_LoginName());
+		i.getGrupo().setText(i.getGrupo() +  Usuario.getInstance().Get_Grupo());
+		i.getNome().setText(i.getNome() + Usuario.getInstance().Get_Nome());
 		i.getTotalAcessos().setText(Integer.toString(Usuario.getInstance().Get_Acessos()));		
 	}
 	
 	public void addConfigurationsUser(InterfaceMenu i) {
-		i.getLogin().setText(Autentificador.getInstance().Get_LoginName());
-		i.getGrupo().setText("Usuario");
-		i.getNome().setText(Usuario.getInstance().Get_Nome());
+		i.getLogin().setText(i.getLogin() + Autentificador.getInstance().Get_LoginName());
+		i.getGrupo().setText(i.getGrupo() + "Usuario");
+		i.getNome().setText(i.getNome() + Usuario.getInstance().Get_Nome());
 		i.getTotalAcessos().setText(Integer.toString(Usuario.getInstance().Get_Acessos()));		
 	}
 }

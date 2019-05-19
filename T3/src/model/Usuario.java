@@ -164,7 +164,6 @@ public class Usuario {
 		}
 		
 		ArrayList<Arquivo> sistema_files = new ArrayList<Arquivo>();
-
 		String[] arquivos = index_data.split("\n");
 
 		for(String arquivo : arquivos)
