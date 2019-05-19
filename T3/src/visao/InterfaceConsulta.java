@@ -100,8 +100,8 @@ public class InterfaceConsulta {
 		return totalConsultas;
 	}
 
-	public void setTotalConsultas(JLabel totalConsultas) {
-		this.totalConsultas = totalConsultas;
+	public void setTotalConsultas(String text) {
+		this.totalConsultas.setText(this.totalConsultas.getText() + text);
 	}
 
 	public void addText() {

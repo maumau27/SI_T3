@@ -197,10 +197,10 @@ public class BD {
 	
 	public static void Atualizar_Senha_Usuario(int id, String senha, String SALT)
 	{
-		String query = "UPDATE usuarios SET senha = " + senha + " AND SALT ='" + SALT + "'  WHERE id =?";
+		String query = "UPDATE usuarios SET senha = '" + senha + "', SALT ='" + SALT + "'  WHERE id =" + id;
+		System.out.println(query);
 		try {
 		    PreparedStatement pstmt = connection.prepareStatement(query);
-		    pstmt.setInt(1, id);
 		    pstmt.executeUpdate();
 		    pstmt.close();
 		
@@ -212,7 +212,7 @@ public class BD {
 	
 	public static int Numero_Acessos_Usuario(String login_name)
 	{
-		String query = "SELECT count(id) FROM registros WHERE codigo = 4003 AND login_name ="+login_name;
+		String query = "SELECT count(id) FROM registros WHERE codigo = 4003 AND login_name ='"+login_name + "'";
 		ResultSet rs = Run_Query(query);
 		try {
 		    if(rs.next())
@@ -231,7 +231,7 @@ public class BD {
 	
 	public static int Numero_Consultas_Usuario(String login_name)
 	{
-		String query = "SELECT count(id) FROM registros WHERE codigo = 4003 AND login_name ="+login_name;
+		String query = "SELECT count(id) FROM registros WHERE codigo = 8003 AND login_name ='"+login_name + "'";
 		ResultSet rs = Run_Query(query);
 		try {
 		    if(rs.next())

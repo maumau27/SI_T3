@@ -62,6 +62,8 @@ public class Usuario {
 		if(index_crypt == null || envelope_digital == null || assinatura_digital == null)
 		{
 			BD.Log(8004, email);
+			JOptionPane.showMessageDialog(null, "Caminho invalido", "Erro", JOptionPane.ERROR_MESSAGE);
+			return null;
 		}
 		
 		//decripta o envelope digital para recuperar a semente

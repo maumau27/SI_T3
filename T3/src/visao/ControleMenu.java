@@ -17,9 +17,9 @@ public class ControleMenu {
 	public void callMenu() {
 		String grupo = Usuario.getInstance().Get_Grupo();
 		InterfaceMenu im = new InterfaceMenu(grupo);
-		if (grupo == "admnistrador") {
+		if (grupo.equals("administrador")) {
 			addConfigurationsAdm(im);
-		}else if (grupo == "usuario"){
+		}else if (grupo.equals("usuario")){
 			addConfigurationsUser(im);
 		}	
 		im.setVisible();
@@ -88,16 +88,17 @@ public class ControleMenu {
 	}
 	
 	public void addConfigurationsAdm(InterfaceMenu i) {
-		i.getLogin().setText(i.getLogin() + Autentificador.getInstance().Get_LoginName());
-		i.getGrupo().setText(i.getGrupo() +  Usuario.getInstance().Get_Grupo());
-		i.getNome().setText(i.getNome() + Usuario.getInstance().Get_Nome());
-		i.getTotalAcessos().setText(Integer.toString(Usuario.getInstance().Get_Acessos()));		
+		System.out.println("Oi");
+		i.getLogin().setText(i.getLogin().getText() + Usuario.getInstance().Get_Email());
+		i.getGrupo().setText(i.getGrupo().getText() +  Usuario.getInstance().Get_Grupo());
+		i.getNome().setText(i.getNome().getText() + Usuario.getInstance().Get_Nome());
+		i.getTotalAcessos().setText(i.getTotalAcessos().getText() + Integer.toString(Usuario.getInstance().Get_Acessos()));		
 	}
 	
 	public void addConfigurationsUser(InterfaceMenu i) {
-		i.getLogin().setText(i.getLogin() + Autentificador.getInstance().Get_LoginName());
-		i.getGrupo().setText(i.getGrupo() + "Usuario");
-		i.getNome().setText(i.getNome() + Usuario.getInstance().Get_Nome());
-		i.getTotalAcessos().setText(Integer.toString(Usuario.getInstance().Get_Acessos()));		
+		i.getLogin().setText(i.getLogin().getText() + Usuario.getInstance().Get_Email());
+		i.getGrupo().setText(i.getGrupo().getText() + Usuario.getInstance().Get_Grupo());
+		i.getNome().setText(i.getNome().getText() + Usuario.getInstance().Get_Nome());
+		i.getTotalAcessos().setText(i.getTotalAcessos().getText() + Integer.toString(Usuario.getInstance().Get_Acessos()));		
 	}
 }

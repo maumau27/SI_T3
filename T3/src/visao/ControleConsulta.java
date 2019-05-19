@@ -96,6 +96,7 @@ public class ControleConsulta {
 	
 	public void addTotalConsulta(InterfaceConsulta ic) {
 		// to do here
-		ic.setTotalConsultas(ic.getTotalConsultas() + );	}
+		ic.setTotalConsultas(Integer.toString(Usuario.getInstance().Get_Total_Consultas()));	
+	}
 	
 }

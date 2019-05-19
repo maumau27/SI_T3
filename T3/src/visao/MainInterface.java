@@ -17,11 +17,11 @@ public class MainInterface {
 		BD.Estabelecer_Conexao();
 		BD.Log(1001);
 		par_digitos.add(new Par_Digitos(3, 1));
-		par_digitos.add(new Par_Digitos(9, 4));
-		par_digitos.add(new Par_Digitos(1, 6));
-		par_digitos.add(new Par_Digitos(6, 8));
+		par_digitos.add(new Par_Digitos(3, 4));
+		par_digitos.add(new Par_Digitos(5, 6));
+		par_digitos.add(new Par_Digitos(7, 8));
 		par_digitos.add(new Par_Digitos(9, 8));
-		par_digitos.add(new Par_Digitos(4, 8));
+		par_digitos.add(new Par_Digitos(1, 8));
 
 		String path = "C:\\Users\\Maurício\\Desktop\\Puc\\Segurança Da Informação\\SI_T3\\T3\\Pacote-T3\\Keys\\admin-x509.crt";
 		
@@ -38,9 +38,9 @@ public class MainInterface {
 //		
 //		ce.callInterfaceEmail();
 		
-		ControllerEmail cc = new ControllerEmail();
+		ControleMenu cc = new ControleMenu();
 		
-		cc.callInterfaceEmail();
+		cc.callMenu();
 		
 //		ControleMenu cm = new ControleMenu();
 //		cm.callMenu();

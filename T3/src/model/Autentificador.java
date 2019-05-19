@@ -360,32 +360,36 @@ public class Autentificador {
 		return n;
 	}
 	
-	public int Validar_Troca_Senha(String certificadoPath, int senha, int senhaConfirma)
+	public int Validar_Troca_Senha(String certificadoPath, String senha_str, String senhaConfirma_str)
 	{
 		String SALT = Functions.Get_Random_SALT();
 		boolean valido = true;
 		boolean alterarSenha = false;
 		boolean alterarCertificado = false;
 		
-		
-		X509Certificate certificado = Recuperar_Certificado_Digital(certificadoPath);
-		if(certificado == null)
+		if(!certificadoPath.isEmpty())
 		{
-			JOptionPane.showMessageDialog(null, "Certificado Invalido", "Erro", JOptionPane.INFORMATION_MESSAGE);
-			System.out.println("Certificado Invalido");
-			BD.Log(7003, login_name);
-			valido = false;
-		}
-		else
-		{
-			alterarCertificado = true;
+			X509Certificate certificado = Recuperar_Certificado_Digital(certificadoPath);
+			if(certificado == null)
+			{
+				JOptionPane.showMessageDialog(null, "Certificado Invalido", "Erro", JOptionPane.INFORMATION_MESSAGE);
+				System.out.println("Certificado Invalido");
+				BD.Log(7003, login_name);
+				valido = false;
+			}
+			else
+			{
+				alterarCertificado = true;
+			}
 		}
 		
 		//senha foi prenchida
-		if(senha != 0)
+		if(!senha_str.isEmpty() && !senhaConfirma_str.isEmpty())
 		{
+			int senha = Integer.parseInt(senha_str);
+			int confirmaSenha = Integer.parseInt(senhaConfirma_str);
 			//valida que a senha é igual a senhaConfirma
-			if(senha != senhaConfirma)
+			if(senha != confirmaSenha)
 			{
 				JOptionPane.showMessageDialog(null, "Senha não bate com a confirmação", "Erro", JOptionPane.INFORMATION_MESSAGE);
 				System.out.println("Senha não bate com a confirmação");
@@ -403,13 +407,32 @@ public class Autentificador {
 			}
 			alterarSenha = true;
 		}
+		else if(senha_str.isEmpty() && senhaConfirma_str.isEmpty())
+		{
+			alterarSenha = false;	
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Senha não bate com a confirmação", "Erro", JOptionPane.INFORMATION_MESSAGE);
+			System.out.println("Senha não bate com a confirmação");
+			BD.Log(7002, login_name);
+			valido = false;
+		}
 		
 		if(valido)
 		{
 			if(alterarSenha)
-				BD.Atualizar_Senha_Usuario(id, Cryptografar_Senha(senha, SALT), SALT);
+			{
+				BD.Atualizar_Senha_Usuario(id, Cryptografar_Senha(Integer.parseInt(senha_str), SALT), SALT);
+				JOptionPane.showMessageDialog(null, "Senha alterado com sucesso!", "Info", JOptionPane.INFORMATION_MESSAGE);
+				System.out.println("Senha alterado com sucesso!");
+			}
 			if(alterarCertificado)
+			{
 				BD.Atualizar_Certificado_Usuario(id, Recuperar_PEM_Format_Ceritficado(Ler_File(certificadoPath)));
+				JOptionPane.showMessageDialog(null, "Certificado alterado com sucesso!", "Info", JOptionPane.INFORMATION_MESSAGE);
+				System.out.println("Certificado alterado com sucesso!");
+			}
 			BD.Log(7004, login_name);
 		}
 		else

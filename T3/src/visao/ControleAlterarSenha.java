@@ -17,6 +17,7 @@ public class ControleAlterarSenha {
 		ia.addCabecalho(cabecalho);
 		ia.addCorpo1(corpo1);
 		addActVoltarMenu(ia);
+		addActSend(ia);
 		ia.setVisible();
 		
 	}
@@ -42,9 +43,7 @@ public class ControleAlterarSenha {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				int senha = Integer.parseInt(ia.getPassword().getText());
-				int confirmaSenha = Integer.parseInt(ia.getRepeatedPassword().getText());
-				Autentificador.getInstance().Validar_Troca_Senha(ia.getCampoCertificado().getText(), senha, confirmaSenha);
+				Autentificador.getInstance().Validar_Troca_Senha(ia.getCampoCertificado().getText(), ia.getPassword().getText(), ia.getRepeatedPassword().getText());
 				
 			}
 		});
