@@ -106,7 +106,7 @@ public class ControllerPassword {
 				}
 				if (validarSenha == 1) {
 					i.getScreen().dispose();
-					ControleCertificado cc = new ControleCertificado();
+					ControlePrivateKey cc = new ControlePrivateKey();
 					cc.callControllerCertificado();
 				}
 				

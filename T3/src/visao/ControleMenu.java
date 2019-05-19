@@ -15,9 +15,18 @@ import model.Usuario;
 public class ControleMenu {
 
 	public void callMenu() {
-		InterfaceMenu im = new InterfaceMenu();
+		String grupo = Usuario.getInstance().Get_Grupo();
+		grupo = grupo.trim();
+		grupo = grupo.toUpperCase();
+		InterfaceMenu im = new InterfaceMenu(grupo);
+		if (grupo == "ADMINISTRADOR") {
+			addConfigurationsAdm(im);
+		}else if (grupo == "USUARIO"){
+			addConfigurationsUser(im);
+		}	
 		im.setVisible();
-		addActBottom1(im);
+		if (grupo == "ADMINISTRADOR")
+			addActBottom1(im);
 		addActBottom2(im);
 		addActBottom3(im);
 		addActBottom4(im);
@@ -32,7 +41,7 @@ public class ControleMenu {
 				BD.Log(5002, Usuario.getInstance().Get_Email());
 				i.getMenu().dispose();
 				ControleCadastro cc = new ControleCadastro();
-				cc.callCadastro(i.getCabecalho() , i.getCorpo1());
+				cc.callCadastro(i.getCabecalho());
 				
 			}
 		});
@@ -60,7 +69,7 @@ public class ControleMenu {
 				BD.Log(5004, Usuario.getInstance().Get_Email());
 				i.getMenu().dispose();
 				ControleConsulta cc = new ControleConsulta();
-				cc.callConsulta(i.getCabecalho(), i.getCorpo1());
+				cc.callConsulta(i.getCabecalho());
 				
 			}
 		});
@@ -78,5 +87,19 @@ public class ControleMenu {
 				
 			}
 		});
+	}
+	
+	public void addConfigurationsAdm(InterfaceMenu i) {
+		i.getLogin().setText(Autentificador.getInstance().Get_LoginName());
+		i.getGrupo().setText(Usuario.getInstance().Get_Grupo());
+		i.getNome().setText(Usuario.getInstance().Get_Nome());
+		i.getTotalAcessos().setText(Integer.toString(Usuario.getInstance().Get_Acessos()));		
+	}
+	
+	public void addConfigurationsUser(InterfaceMenu i) {
+		i.getLogin().setText(Autentificador.getInstance().Get_LoginName());
+		i.getGrupo().setText("Usuario");
+		i.getNome().setText(Usuario.getInstance().Get_Nome());
+		i.getTotalAcessos().setText(Integer.toString(Usuario.getInstance().Get_Acessos()));		
 	}
 }

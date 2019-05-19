@@ -9,16 +9,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
+import model.Autentificador;
 import model.BD;
 import model.Usuario;
 
 public class ControleCadastro {
 
 	
-	public void callCadastro(JPanel cabecalho , JPanel corpo1) {
+	public void callCadastro(JPanel cabecalho) {
 		InterfaceCadastro ic = new InterfaceCadastro();
 		ic.addCabecalho(cabecalho);
-		ic.addCorpo1(corpo1);
+		ic.addCorpo1();
+		addtotalAcesso(ic);
 		addActVoltarMenu(ic);
 		ic.setVisible();
 	}
@@ -36,6 +38,32 @@ public class ControleCadastro {
 				
 			}
 		});
+		
+	}
+	
+	public void addActCadastro(InterfaceCadastro ic) {
+		ic.getConfirmarCadastro().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String certificadoPath = ic.getField1().getText();
+				int grupo = Integer.parseInt(String.valueOf(ic.getField2().getSelectedItem()));
+				int senha = Integer.parseInt(ic.getField3().getText());
+				int senhaConfirma = Integer.parseInt(ic.getField4().getText());
+				
+				int retorno = Autentificador.getInstance().Validar_Dados_Cadastro(certificadoPath, grupo, senha, senhaConfirma);
+				
+				if ( retorno == 1) {
+					System.out.println("Usuario Cadastrado com sucesso!");
+				}
+				
+			}
+		});
+	}
+	
+	public void addtotalAcesso(InterfaceCadastro ic) {
+		// To do here
+		ic.setLabeltotalUsuario();
 		
 	}
 

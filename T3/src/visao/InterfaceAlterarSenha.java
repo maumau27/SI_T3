@@ -23,6 +23,36 @@ public class InterfaceAlterarSenha {
 	JLabel label1 , label2 , label3;
 	JPanel corpo2;
 	JButton send;
+	
+	public JTextField getCampoCertificado() {
+		return campoCertificado;
+	}
+
+
+	public void setCampoCertificado(JTextField campoCertificado) {
+		this.campoCertificado = campoCertificado;
+	}
+
+
+	public JTextField getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(JTextField password) {
+		this.password = password;
+	}
+
+
+	public JTextField getRepeatedPassword() {
+		return repeatedPassword;
+	}
+
+
+	public void setRepeatedPassword(JTextField repeatedPassword) {
+		this.repeatedPassword = repeatedPassword;
+	}
+
 	JButton voltarMenu;
 	JPanel buttons;
 	

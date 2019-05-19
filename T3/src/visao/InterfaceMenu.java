@@ -23,8 +23,51 @@ import model.BD;
 
 public class InterfaceMenu {
 
-	JFrame menu;
-	JPanel cabecalho;
+	private JFrame menu;
+	private JPanel cabecalho;
+	private JPanel corpo1;
+	private JPanel corpo2;
+	private JLabel login;
+	
+	public JLabel getLogin() {
+		return login;
+	}
+
+	public void setLogin(JLabel login) {
+		this.login = login;
+	}
+
+	public JLabel getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(JLabel grupo) {
+		this.grupo = grupo;
+	}
+
+	public JLabel getNome() {
+		return nome;
+	}
+
+	public void setNome(JLabel nome) {
+		this.nome = nome;
+	}
+
+	public JLabel getTotalAcessos() {
+		return totalAcessos;
+	}
+
+	public void setTotalAcessos(JLabel totalAcessos) {
+		this.totalAcessos = totalAcessos;
+	}
+
+	private JLabel grupo;
+	private JLabel nome;
+	private JLabel totalAcessos;
+	private JButton button1;
+	private JButton button2;
+	private JButton button3;
+	private JButton button4;
 	
 	public JPanel getCabecalho() {
 		return cabecalho;
@@ -50,27 +93,20 @@ public class InterfaceMenu {
 		this.corpo1 = corpo1;
 	}
 
-	JPanel corpo1;
-	JPanel corpo2;
-	JLabel login;
-	JLabel grupo;
-	JLabel nome;
-	JLabel totalAcessos;
-	JButton button1;
-	JButton button2;
-	JButton button3;
-	JButton button4;
 	
-	public InterfaceMenu() {
-		BD.Log(5001, Autentificador.getInstance().Get_LoginName());
-		
+	public InterfaceMenu(String grupo) {
+		BD.Log(5001, Autentificador.getInstance().Get_LoginName());		
 		menu = new JFrame("Menu");
 		menu.setLayout(new BorderLayout());
 		menu.setSize(600,600);
 		setConfigurationsOfPanels();
 		fillCabecalho();
 		fillAcessos();
-		fillButtons();
+		if ( grupo == "ADMINISTRADOR") {
+			fillButtonsAdm();
+		} else {
+			fillButtonsUser();
+		}
 		menu.add(cabecalho , BorderLayout.NORTH);
 		menu.add(corpo1 , BorderLayout.CENTER);
 		menu.add(corpo2 , BorderLayout.SOUTH);
@@ -118,7 +154,7 @@ public class InterfaceMenu {
 		corpo1.add(totalAcessos , BorderLayout.CENTER);
 	}
 	
-	public void fillButtons() {
+	public void fillButtonsAdm() {
 		button1 = new JButton("Cadastrar um novo usuário");
 		button2 = new JButton("Alterar senha pessoal e certificado digital do usuário");
 		button3 = new JButton("Consultar pasta de arquivos secretos do usuário");
@@ -128,6 +164,18 @@ public class InterfaceMenu {
 		corpo2.add(button3);
 		corpo2.add(button4);
 		button1.setPreferredSize(new Dimension(600,100));
+		button2.setPreferredSize(new Dimension(600,100));
+		button3.setPreferredSize(new Dimension(600,100));
+		button4.setPreferredSize(new Dimension(600,100));
+	}
+	
+	public void fillButtonsUser() {
+		button2 = new JButton("Alterar senha pessoal e certificado digital do usuário");
+		button3 = new JButton("Consultar pasta de arquivos secretos do usuário");
+		button4 = new JButton("Sair do Sistema");
+		corpo2.add(button2);
+		corpo2.add(button3);
+		corpo2.add(button4);
 		button2.setPreferredSize(new Dimension(600,100));
 		button3.setPreferredSize(new Dimension(600,100));
 		button4.setPreferredSize(new Dimension(600,100));
