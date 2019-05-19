@@ -22,7 +22,7 @@ import javax.swing.undo.UndoableEdit;
 import model.Autentificador;
 import model.BD;
 
-public class InterfaceCertificado {
+public class InterfacePrivateKey {
 
 	JFrame screen;
 	JPanel panel;
@@ -33,7 +33,17 @@ public class InterfaceCertificado {
 	JButton send;
 	
 	
-	public InterfaceCertificado() {
+	public JTextField getSenhaSecreta() {
+		return senhaSecreta;
+	}
+
+
+	public void setSenhaSecreta(JTextField senhaSecreta) {
+		this.senhaSecreta = senhaSecreta;
+	}
+
+
+	public InterfacePrivateKey() {
 		BD.Log(4001, Autentificador.getInstance().Get_LoginName());
 	
 		screen = new JFrame("Autentication Certificate");

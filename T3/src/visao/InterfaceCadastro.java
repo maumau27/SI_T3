@@ -26,6 +26,7 @@ public class InterfaceCadastro {
 	JLabel label2;
 	JLabel label3;
 	JLabel label4;
+	JLabel labeltotalUsuarios;
 	JTextField field1;
 	JComboBox<String> field2;
 	JTextField field3;
@@ -86,13 +87,24 @@ public class InterfaceCadastro {
 	}
 
 
-	public void addCorpo1(JPanel corpo1) {
-		this.corpo1 = corpo1;
+	public void addCorpo1() {
+		corpo1 = new JPanel();
+		labeltotalUsuarios = new JLabel("Total de consultas do usuário:");
+		corpo1.add(labeltotalUsuarios);
 		corpo1.setLayout(new BorderLayout());
-	    //corpo1.setPreferredSize(new Dimension(100,100));
 		menu.add(corpo1 , BorderLayout.CENTER);
 	}
 	
+	public JLabel getLabeltotalUsuario() {
+		return labeltotalUsuarios;
+	}
+
+
+	public void setLabeltotalUsuario(JLabel labeltotalUsuario) {
+		this.labeltotalUsuarios = labeltotalUsuario;
+	}
+
+
 	public void setVisible() {
 		menu.setVisible(true);
 	}
@@ -124,6 +136,36 @@ public class InterfaceCadastro {
 		sair = new JButton("Voltar para o Menu Inicial");
 		panelbuttons.add(confirmarCadastro);
 		panelbuttons.add(sair);
+	}
+
+
+	public JButton getConfirmarCadastro() {
+		return confirmarCadastro;
+	}
+
+
+	public JTextField getField1() {
+		return field1;
+	}
+
+
+	public void setField1(JTextField field1) {
+		this.field1 = field1;
+	}
+
+
+	public JComboBox<String> getField2() {
+		return field2;
+	}
+
+
+	public void setField2(JComboBox<String> field2) {
+		this.field2 = field2;
+	}
+
+
+	public void setConfirmarCadastro(JButton confirmarCadastro) {
+		this.confirmarCadastro = confirmarCadastro;
 	}
 
 

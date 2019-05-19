@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
+import model.Autentificador;
 import model.BD;
 import model.Usuario;
 
@@ -30,6 +31,20 @@ public class ControleAlterarSenha {
 				ia.getMenu().dispose();
 				ControleMenu cm = new ControleMenu();
 				cm.callMenu();
+				
+			}
+		});
+	}
+	
+	public void addActSend(InterfaceAlterarSenha ia) {
+		ia.getSend().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				int senha = Integer.parseInt(ia.getPassword().getText());
+				int confirmaSenha = Integer.parseInt(ia.getRepeatedPassword().getText());
+				Autentificador.getInstance().Validar_Troca_Senha(ia.getCampoCertificado().getText(), senha, confirmaSenha);
 				
 			}
 		});
