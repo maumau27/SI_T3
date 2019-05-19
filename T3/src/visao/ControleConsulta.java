@@ -37,6 +37,7 @@ public class ControleConsulta {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				BD.Log(8003, Usuario.getInstance().Get_Email());
+				System.out.println(ic.getCampoPasta().getText());
 				ArrayList<Arquivo> arquivos = Usuario.getInstance().Parse_Index(ic.getCampoPasta().getText());
 				addArchivestoTable(arquivos, ic.getTable());
 				ic.addTable();
@@ -96,7 +97,7 @@ public class ControleConsulta {
 	
 	public void addTotalConsulta(InterfaceConsulta ic) {
 		// to do here
-		ic.setTotalConsultas();
+		//ic.setTotalConsultas();
 	}
 	
 }

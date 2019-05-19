@@ -35,6 +35,7 @@ public class InterfaceConsulta {
 		menu = new JFrame();
 		menu.setLayout(new BorderLayout());
 		menu.setSize(600,600);
+		menu.setLocationRelativeTo(null);
 		setConfigurationsOfPanels();
 		menu.add(corpo2 , BorderLayout.SOUTH);
 		corpo2.setLayout(new BoxLayout(corpo2, BoxLayout.Y_AXIS));

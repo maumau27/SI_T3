@@ -21,7 +21,7 @@ gBQjgTvDGSuVmdnK6jtr/hwkc8KCjjANBgkqhkiG9w0BAQsFAAOCAQEAYjji1ws7
 URKDWWg2XbZpuTO7IhxTYKwddKvsJTjizHIz6mi6JavHM7+xtB/ZvQaW04O9y5QI
 9EQPJsF3nybVNKWIR9UA4tWSfHmQ5J9cGk/bZBCqzvgmV8Wv7cMUB7q6mzGUP1a+
 HtNmSvQW9Uow3g==
------END CERTIFICATE-----", "fb61161c8a85da534c7875be98394ba9673628ea", 1, "ABCDEFGHI");
+-----END CERTIFICATE-----", "f5a5b1db3620b032a123b0b9ca57acf38cd563fc", 1, "ABCDEFGHIJ");
 
 insert into grupos (nome) values ("administrador");
 insert into grupos (nome) values ("usuario");

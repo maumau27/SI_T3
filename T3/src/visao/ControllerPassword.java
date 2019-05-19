@@ -76,14 +76,9 @@ public class ControllerPassword {
 		button.addActionListener( new ActionListener() {
 		public void actionPerformed(ActionEvent e)
         {	     
-			numberClicks++;
-			if ( numberClicks <= 5) {
 			getValueBottom(button);
             addValueAndActionToButton(i);
             i.getScreen().revalidate();
-			} else {
-				JOptionPane.showMessageDialog(button, "Password must have less than 5 numbers!");
-			}
         }
 		});
 	}	

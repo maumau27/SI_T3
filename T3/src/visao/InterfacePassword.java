@@ -21,7 +21,7 @@ import model.BD;
 public class InterfacePassword {
 
 	
-	private JFrame screen;
+	private JFrame menu;
 	private JPanel panel;
 	private ArrayList<JButton> buttons;
 	private JButton send;
@@ -41,13 +41,13 @@ public class InterfacePassword {
 
 
 	public JFrame getScreen() {
-		return screen;
+		return menu;
 	}
 
 
 
 	public void setScreen(JFrame screen) {
-		this.screen = screen;
+		this.menu = screen;
 	}
 
 
@@ -76,9 +76,10 @@ public class InterfacePassword {
 	public InterfacePassword(int numberButtons) {
 		BD.Log(3001, Autentificador.getInstance().Get_LoginName());
 		
-		screen = new JFrame("Autentication Password");
+		menu = new JFrame("Autentication Password");
 		panel = new JPanel();
-		screen.setSize(500,200);
+		menu.setSize(500,200);
+		menu.setLocationRelativeTo(null);
 		buttons = new ArrayList<JButton>(numberButtons);
 		send = new JButton("Send Password");
 		reset = new JButton("Reset");
@@ -87,7 +88,7 @@ public class InterfacePassword {
 		addButtonsToPanel();
 		addPanel();
 		
-		screen.addWindowListener(new WindowAdapter() {
+		menu.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
             	BD.Log(1002);
@@ -111,8 +112,8 @@ public class InterfacePassword {
 		JPanel passwordArea = new JPanel();
 		panelCommands.add(send);
 		panelCommands.add(reset);
-		screen.getContentPane().add(BorderLayout.SOUTH , panelCommands);
-		screen.getContentPane().add(BorderLayout.CENTER,passwordArea);
+		menu.getContentPane().add(BorderLayout.SOUTH , panelCommands);
+		menu.getContentPane().add(BorderLayout.CENTER,passwordArea);
 	}
 
 
@@ -141,11 +142,11 @@ public class InterfacePassword {
 	}
 	
 	public void addPanel() {
-		screen.getContentPane().add(BorderLayout.NORTH , panel);
+		menu.getContentPane().add(BorderLayout.NORTH , panel);
 	}
 	
 	public void setVisibleScreen() {
-		screen.setVisible(true);
+		menu.setVisible(true);
 	}
 
 	

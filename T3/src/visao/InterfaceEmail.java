@@ -1,7 +1,9 @@
 package visao;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Frame;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -25,10 +27,10 @@ public class InterfaceEmail{
 	public InterfaceEmail(){
 		
 		BD.Log(2001);
-		
 		area = new JFrame("Autentication Email");
 		panel = new JPanel();
 		area.setSize(500,300);
+		area.setLocationRelativeTo(null);
 		createLabelArea();
 		
 		area.addWindowListener(new WindowAdapter() {

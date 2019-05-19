@@ -8,7 +8,6 @@ create table usuarios (
 	SALT varchar(10) not null,
     id_grupo int not null,
     data_bloqueio datetime not null DEFAULT CURRENT_TIMESTAMP(),
-    total_acessos int default 0,
     
     primary key usuario_PK(id),
     foreign key usuarios_grupo_FK(id_grupo) REFERENCES grupos(GID)

@@ -75,7 +75,7 @@ public class ControlePrivateKey {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// Validar dados
-				int retorno = Autentificador.getInstance().Validar_ChavePrivada(pathPrivateKeySelected, ic.getSenhaSecreta().toString());
+				int retorno = Autentificador.getInstance().Validar_ChavePrivada(pathPrivateKeySelected, ic.getSenhaSecreta().getText());
 				
 				if (retorno == -2) {
 					ic.getScreen().dispose();

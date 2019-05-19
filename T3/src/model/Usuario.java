@@ -54,6 +54,7 @@ public class Usuario {
 
 	public byte[] Decriptar_File(String path, String name)
 	{
+		System.out.println(path + "\\" + name + ".enc");
 		byte[] index_crypt = Autentificador.getInstance().Ler_File_Bin(path + "\\" + name + ".enc");
 		byte[] envelope_digital = Autentificador.getInstance().Ler_File_Bin(path + "\\" + name + ".env");
 		byte[] assinatura_digital = Autentificador.getInstance().Ler_File_Bin(path + "\\" + name + ".asd");
@@ -65,6 +66,7 @@ public class Usuario {
 		
 		//decripta o envelope digital para recuperar a semente
 		try {
+			System.out.println(Autentificador.getInstance().Byte_to_String(envelope_digital));
 			Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 			cipher.init(Cipher.DECRYPT_MODE, privateKey);
 			byte[] seed = cipher.doFinal(envelope_digital);
@@ -120,9 +122,13 @@ public class Usuario {
 		}
 		catch (Exception e) {
 			if(name == "index")
+			{
+				JOptionPane.showMessageDialog(null, "Falha na decriptação do arquivo de índice", "Erro", JOptionPane.ERROR_MESSAGE);
 				BD.Log(8007, email);
+			}
 			else
 			{
+				JOptionPane.showMessageDialog(null, "Falha na decriptação do arquivo " + name, "Erro", JOptionPane.ERROR_MESSAGE);
 				BD.Log(8015, email, name);
 			}
 			e.printStackTrace();

@@ -210,21 +210,6 @@ public class BD {
 		}
 	}
 	
-	public static void Adicionar_Acesso_Usuario(int id)
-	{
-		String query = "UPDATE usuarios SET total_acessos = total_acessos + 1  WHERE id =?";
-		try {
-		    PreparedStatement pstmt = connection.prepareStatement(query);
-		    pstmt.setInt(1, id);
-		    pstmt.executeUpdate();
-		    pstmt.close();
-		
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.err.println("Connexão Falhou");
-		}
-	}
-	
 	public static int Numero_Acessos_Usuario(String login_name)
 	{
 		String query = "SELECT count(id) FROM registros WHERE codigo = 4003 AND login_name ="+login_name;
@@ -381,9 +366,11 @@ public class BD {
 				"ON registros.codigo = mensagens.codigo order by data_ocorrencia;";
 		ResultSet rs = Run_Query(query);
 		try {
+			int i = 1;
 			while(rs.next())
 			{
-				System.out.println(rs.getString(1) + "\t" + rs.getString(2));
+				System.out.println(i + "\t" + rs.getString(1) + "\t" + rs.getString(2));
+				i++;
 			}
 			rs.close();
 					

@@ -63,7 +63,7 @@ public class ControleCadastro {
 	
 	public void addtotalAcesso(InterfaceCadastro ic) {
 		// To do here
-		ic.setLabeltotalUsuario();
+		//ic.setLabeltotalUsuario(BD.Total_Usuarios_Sistema());
 		
 	}
 

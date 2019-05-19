@@ -12,24 +12,14 @@ public class Main {
 	public static void main(String[] args) {
 		ArrayList<Par_Digitos> par_digitos = new ArrayList<Par_Digitos>();
 		BD.Estabelecer_Conexao();		
-		
+
 		par_digitos.add(new Par_Digitos(3, 1));
 		par_digitos.add(new Par_Digitos(9, 4));
 		par_digitos.add(new Par_Digitos(1, 6));
 		par_digitos.add(new Par_Digitos(6, 8));
 		par_digitos.add(new Par_Digitos(9, 8));
 		par_digitos.add(new Par_Digitos(4, 8));
-		Object[] options = {"Recusar",
-        "Confirmar"};
-		int n = JOptionPane.showOptionDialog(null,
-			"Would you like green eggs and ham?",
-			"A Silly Question",
-			JOptionPane.YES_NO_OPTION,
-			JOptionPane.QUESTION_MESSAGE,
-			null,     //do not use a custom Icon
-			options,  //the titles of buttons
-			options[0]); //default button title
-		System.out.println(n);
+
 		String path = "C:\\Users\\Maurício\\Desktop\\Puc\\Segurança Da Informação\\SI_T3\\T3\\Pacote-T3\\Keys\\admin-x509.crt";
 		
 		//Autentificador.getInstance().Validar_Dados_Cadastro(path, 2, 391694, 391694);

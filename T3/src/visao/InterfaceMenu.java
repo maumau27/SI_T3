@@ -99,6 +99,7 @@ public class InterfaceMenu {
 		menu = new JFrame("Menu");
 		menu.setLayout(new BorderLayout());
 		menu.setSize(600,600);
+		menu.setLocationRelativeTo(null);
 		setConfigurationsOfPanels();
 		fillCabecalho();
 		fillAcessos();

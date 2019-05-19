@@ -63,6 +63,7 @@ public class InterfaceAlterarSenha {
 		
 		menu = new JFrame("Alterar Senha");
 		menu.setSize(600,600);
+		menu.setLocationRelativeTo(null);
 		corpo2 = new JPanel();
 		menu.add(corpo2 , BorderLayout.SOUTH);
 		corpo2.setLayout(new BoxLayout(corpo2, BoxLayout.Y_AXIS));

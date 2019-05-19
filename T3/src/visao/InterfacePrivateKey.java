@@ -24,7 +24,7 @@ import model.BD;
 
 public class InterfacePrivateKey {
 
-	JFrame screen;
+	JFrame menu;
 	JPanel panel;
 	JButton btAbrir;
 	JLabel labelSenha;
@@ -46,17 +46,18 @@ public class InterfacePrivateKey {
 	public InterfacePrivateKey() {
 		BD.Log(4001, Autentificador.getInstance().Get_LoginName());
 	
-		screen = new JFrame("Autentication Certificate");
+		menu = new JFrame("Autentication Certificate");
 		panel = new JPanel();
 		panel.setLayout(new BorderLayout());
-		screen.setSize(400,400);
+		menu.setSize(400,400);
+		menu.setLocationRelativeTo(null);
 		addPanel();
 		setAbrirConfig();
 		addLabel();
 		addText();
 		addSendButtom();
 		
-		screen.addWindowListener(new WindowAdapter() {
+		menu.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
             	BD.Log(1002);
@@ -68,12 +69,12 @@ public class InterfacePrivateKey {
 	
 	
 	public JFrame getScreen() {
-		return screen;
+		return menu;
 	}
 
 
 	public void setScreen(JFrame screen) {
-		this.screen = screen;
+		this.menu = screen;
 	}
 
 
@@ -121,11 +122,11 @@ public class InterfacePrivateKey {
 	}
 	
 	public void addPanel() {
-		screen.getContentPane().add(panel);
+		menu.getContentPane().add(panel);
 	}
 	
 	public void setVisible() {
-		screen.setVisible(true);
+		menu.setVisible(true);
 	}
 
 
