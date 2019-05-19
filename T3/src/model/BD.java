@@ -225,9 +225,28 @@ public class BD {
 		}
 	}
 	
-	public static int Numero_Acessos_Usuario(int id)
+	public static int Numero_Acessos_Usuario(String login_name)
 	{
-		String query = "SELECT count(id) FROM registros WHERE codigo = 4003 AND id_usuario ="+id;
+		String query = "SELECT count(id) FROM registros WHERE codigo = 4003 AND login_name ="+login_name;
+		ResultSet rs = Run_Query(query);
+		try {
+		    if(rs.next())
+		    {
+		    	int value = rs.getInt(1);
+		    	rs.close();
+		    	return value;
+		    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+		
+		return 0;
+	}
+	
+	public static int Numero_Consultas_Usuario(String login_name)
+	{
+		String query = "SELECT count(id) FROM registros WHERE codigo = 4003 AND login_name ="+login_name;
 		ResultSet rs = Run_Query(query);
 		try {
 		    if(rs.next())

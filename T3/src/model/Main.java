@@ -5,6 +5,8 @@ import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class Main {
 	
 	public static void main(String[] args) {
@@ -17,10 +19,22 @@ public class Main {
 		par_digitos.add(new Par_Digitos(6, 8));
 		par_digitos.add(new Par_Digitos(9, 8));
 		par_digitos.add(new Par_Digitos(4, 8));
-
-		String path = "C:\\Users\\Maurício\\Desktop\\Puc\\Segurança Da Informação\\SI_T3\\T3\\Pacote-T3\\Keys\\user01-pkcs8-des.pem";
+		Object[] options = {"Recusar",
+        "Confirmar"};
+		int n = JOptionPane.showOptionDialog(null,
+			"Would you like green eggs and ham?",
+			"A Silly Question",
+			JOptionPane.YES_NO_OPTION,
+			JOptionPane.QUESTION_MESSAGE,
+			null,     //do not use a custom Icon
+			options,  //the titles of buttons
+			options[0]); //default button title
+		System.out.println(n);
+		String path = "C:\\Users\\Maurício\\Desktop\\Puc\\Segurança Da Informação\\SI_T3\\T3\\Pacote-T3\\Keys\\admin-x509.crt";
 		
 		//Autentificador.getInstance().Validar_Dados_Cadastro(path, 2, 391694, 391694);
+		
+		path = "C:\\Users\\Maurício\\Desktop\\Puc\\Segurança Da Informação\\SI_T3\\T3\\Pacote-T3\\Keys\\user01-pkcs8-des.pem";
 		
 		Autentificador.getInstance().Iniciar_Validacao();
 		Autentificador.getInstance().Validar_Email("user01@inf1416.puc-rio.br");
@@ -33,7 +47,7 @@ public class Main {
 			path = "C:\\Users\\Maurício\\Desktop\\Puc\\Segurança Da Informação\\SI_T3\\T3\\Pacote-T3\\Files";
 			ArrayList<Arquivo> arquivos = user.Parse_Index(path);
 			user.Decriptar_Arquivo(arquivos.get(0));
-			//user.Decriptar_Arquivo(arquivos.get(1));
+			user.Decriptar_Arquivo(arquivos.get(1));
 		}
 		
 		/*String path = "C:\\Users\\Maurício\\Desktop\\Puc\\Segurança Da Informação\\SI_T3\\T3\\Pacote-T3\\Keys\\admin-x509.crt";

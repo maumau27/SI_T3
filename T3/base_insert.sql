@@ -1,4 +1,4 @@
-insert into usuarios (login_name, nome, certificado_digital, senha, id_grupo, SALT) values ("mauricio@teste.com", "Mauricio Lana", "-----BEGIN CERTIFICATE-----
+insert into usuarios (login_name, nome, certificado_digital, senha, id_grupo, SALT) values ("admin@inf1416.puc-rio.br", "Adminstrador", "-----BEGIN CERTIFICATE-----
 MIID9jCCAt6gAwIBAgIBATANBgkqhkiG9w0BAQsFADCBhDELMAkGA1UEBhMCQlIx
 CzAJBgNVBAgMAlJKMQwwCgYDVQQHDANSaW8xDDAKBgNVBAoMA1BVQzEQMA4GA1UE
 CwwHSU5GMTQxNjETMBEGA1UEAwwKQUMgSU5GMTQxNjElMCMGCSqGSIb3DQEJARYW
