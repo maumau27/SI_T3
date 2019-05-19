@@ -2,6 +2,7 @@ package visao;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -91,8 +92,11 @@ public class InterfaceConsulta {
 	
 	public void addCorpo1() {
 		corpo1 = new JPanel();
+		corpo1.setLayout(new BorderLayout());
+	    corpo1.setPreferredSize(new Dimension(200,200));
 		totalConsultas = new JLabel("Total de consultas do usuário:");
-		corpo1.add(totalConsultas);
+		totalConsultas.setFont(new Font("Dialog", Font.BOLD, 15));
+		corpo1.add(totalConsultas , BorderLayout.CENTER);
 		menu.add(corpo1 , BorderLayout.CENTER);
 	}
 	

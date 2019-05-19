@@ -2,6 +2,7 @@ package visao;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -90,9 +91,11 @@ public class InterfaceCadastro {
 
 	public void addCorpo1() {
 		corpo1 = new JPanel();
-		labeltotalUsuarios = new JLabel("Total de consultas do usuário:");
-		corpo1.add(labeltotalUsuarios);
 		corpo1.setLayout(new BorderLayout());
+	    corpo1.setPreferredSize(new Dimension(200,200));
+		labeltotalUsuarios = new JLabel("Total de consultas do usuário:");
+		labeltotalUsuarios.setFont(new Font("Dialog", Font.BOLD, 15));
+		corpo1.add(labeltotalUsuarios , BorderLayout.CENTER);
 		menu.add(corpo1 , BorderLayout.CENTER);
 	}
 	
