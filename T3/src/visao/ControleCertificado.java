@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.security.cert.X509Certificate;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -53,14 +54,9 @@ public class ControleCertificado {
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 				File selectedFile = jfc.getSelectedFile();
 				System.out.println(selectedFile.getAbsolutePath());
+				X509Certificate certificate = Autentificador.getInstance().Recuperar_Certificado_Digital(selectedFile.getAbsolutePath());
 			}
-//			Process p = Runtime.getRuntime().exec("explorer.exe " + "C:\\Logs\\");
-//			InputStream doc = p.getInputStream();
-//			if (doc !=null) {
-//				System.out.println("Oi");
-//			}
-//			BufferedReader br = new BufferedReader ( new InputStreamReader ( p.getInputStream() ));
-//			br.read();
+
 		} catch (Exception e1) {			
 			e1.printStackTrace();
 		}

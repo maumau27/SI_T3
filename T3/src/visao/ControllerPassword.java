@@ -104,6 +104,12 @@ public class ControllerPassword {
 					ControllerEmail ce =  new ControllerEmail();
 					ce.callInterfaceEmail();				
 				}
+				if (validarSenha == 1) {
+					i.getScreen().dispose();
+					ControleCertificado cc = new ControleCertificado();
+					cc.callControllerCertificado();
+				}
+				
 			}
 		});
 	}
