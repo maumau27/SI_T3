@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.Base64.Encoder;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,6 +35,7 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.net.ssl.SSLContext;
+import javax.security.auth.x500.X500Principal;
 import javax.swing.JOptionPane;
 import javax.swing.text.AbstractDocument.LeafElement;
 
@@ -285,15 +288,6 @@ public class Autentificador {
 			return -1;
 		}
 		
-		//valida que o email do usuario é unico no sistema
-		if(BD.Usuario_Existe(email))
-		{
-			JOptionPane.showMessageDialog(null, "Usuario ja existe", "Erro", JOptionPane.INFORMATION_MESSAGE);
-			System.out.println("Usuario ja existe");
-			BD.Log(6006, login_name);
-			return -1;
-		}
-		
 		//valida que o email está num formato valido
 		if(!Validar_Formato_Email(email))
 		{
@@ -312,10 +306,58 @@ public class Autentificador {
 			return -1;
 		}
 		
-		BD.Cadastrar_Usuario(email, nome, Recuperar_PEM_Format_Ceritficado(Ler_File(certificadoPath)), SALT, grupo, Cryptografar_Senha(senha, SALT));;
+		int n = Imprimir_Dados_Certificado(certificado);
+		
+		if(n < 1)
+			return -1;
+		
+		//valida que o email do usuario é unico no sistema
+		if(BD.Usuario_Existe(email))
+		{
+			JOptionPane.showMessageDialog(null, "Usuario ja existe", "Erro", JOptionPane.INFORMATION_MESSAGE);
+			System.out.println("Usuario ja existe");
+			BD.Log(6006, login_name);
+			return -1;
+		}
+		
+		BD.Cadastrar_Usuario(email, nome, Recuperar_PEM_Format_Ceritficado(Ler_File(certificadoPath)), SALT, grupo, Cryptografar_Senha(senha, SALT));
+		JOptionPane.showMessageDialog(null, "Usuario cadastrado com Sucesso", "Erro", JOptionPane.INFORMATION_MESSAGE);
 		BD.Log(6005, login_name);
 		
 		return 1;
+	}
+	
+	private int Imprimir_Dados_Certificado(X509Certificate certificado)
+	{
+		int Versao = certificado.getVersion();
+		BigInteger Serie = certificado.getSerialNumber();
+		Date Validade = certificado.getNotAfter();
+		String Assinatura = certificado.getSigAlgName();
+		X500Principal Issuer = certificado.getIssuerX500Principal();
+		String sujeito = Recuperar_Nome_Certificado(certificado);
+		String _email = Recuperar_Email_Certificado(certificado);
+		
+		String texto = "Usuario Cadastrado com Sucesso!\nDados do Certificado:\n";
+		texto += "Versão : \t" + Versao + "\n";
+		texto += "Serie : \t" + Serie + "\n";
+		texto += "Validade : \t" + Validade.toString() + "\n";
+		texto += "Tipo de Assinatura : \t" + Assinatura + "\n";
+		texto += "Emissor : \t" + Issuer.getName() + "\n";
+		texto += "Sujeito : \t" + sujeito + "\n";
+		texto += "Email : \t" + _email + "\n";
+		
+		Object[] options = {"Confirmar",
+        "Recusar"};
+		int n = JOptionPane.showOptionDialog(null,
+			"Would you like green eggs and ham?",
+			"A Silly Question",
+			JOptionPane.YES_NO_OPTION,
+			JOptionPane.QUESTION_MESSAGE,
+			null,     //do not use a custom Icon
+			options,  //the titles of buttons
+			options[0]); //default button title
+		
+		return n;
 	}
 	
 	public int Validar_Troca_Senha(String certificadoPath, int senha, int senhaConfirma)

@@ -1,5 +1,6 @@
 package model;
 
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.sound.midi.Synthesizer;
 import javax.swing.JOptionPane;
 
 public class Usuario {
@@ -19,6 +21,11 @@ public class Usuario {
 
 	public static Usuario getInstance()
 	{
+		if(instance == null)
+		{
+			JOptionPane.showMessageDialog(null, "Usuario não foi passou pela Autentificação!", "Erro", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+		}
 		return instance;
 	}
 	public static void SetInstance(Usuario user)
@@ -45,7 +52,7 @@ public class Usuario {
 		this.grupo = grupo;
 	}
 
-	public String Decriptar_File(String path, String name)
+	public byte[] Decriptar_File(String path, String name)
 	{
 		byte[] index_crypt = Autentificador.getInstance().Ler_File_Bin(path + "\\" + name + ".enc");
 		byte[] envelope_digital = Autentificador.getInstance().Ler_File_Bin(path + "\\" + name + ".env");
@@ -63,7 +70,8 @@ public class Usuario {
 			byte[] seed = cipher.doFinal(envelope_digital);
 
 			KeyGenerator keyGenerator = KeyGenerator.getInstance("DES");
-			SecureRandom secureRandom = new SecureRandom(seed);
+			SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+			secureRandom.setSeed(seed);
 			int keyBitSize = 56;
 
 			keyGenerator.init(keyBitSize, secureRandom);
@@ -74,7 +82,6 @@ public class Usuario {
 			//Decriptando o index_data
 			cipher.init(Cipher.DECRYPT_MODE, secretKey);
 			byte[] index_data_bytes = cipher.doFinal(index_crypt);
-			String index_data = Autentificador.getInstance().Byte_to_String(index_data_bytes);
 			
 			if(name == "index")
 				BD.Log(8005, email);
@@ -84,16 +91,10 @@ public class Usuario {
 			}
 		
 			Signature sig = Autentificador.getInstance().Gerar_AssinaturaDigital("MD5withRSA");
-			byte[] signature = null;
-
-			sig.initSign(privateKey);
+			sig.initVerify(publicKey);
 			sig.update(index_data_bytes);
-			signature = sig.sign();
-			
-			String signature_hex = Functions.Byte_to_Hex(signature);
-			String assinatura_digital_hex = Functions.Byte_to_Hex(assinatura_digital);
 
-			if(signature_hex.equals(assinatura_digital_hex))
+			if(sig.verify(assinatura_digital))
 			{
 				if(name == "index")
 					BD.Log(8006, email);
@@ -101,8 +102,8 @@ public class Usuario {
 				{
 					BD.Log(8014, email, name);
 				}
-				
-				return index_data;
+
+				return index_data_bytes;
 			}
 			else 
 			{
@@ -134,24 +135,22 @@ public class Usuario {
 	{
 		if(Tem_Acesso(arquivo))
 		{
-			String file_data = Decriptar_File(arquivo.Get_Path(), arquivo.Get_NomeCodigo());
-			if(file_data != null)
-			{
-				try {
-					PrintWriter out = new PrintWriter(arquivo.Get_Path() + "\\" + arquivo.Get_NomeSecreto());
-					out.println(file_data);
-					out.close();
-					System.out.println("Arquivo Decriptado e Salvo com Sucesso!");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+			byte[] file_data = Decriptar_File(arquivo.Get_Path(), arquivo.Get_NomeCodigo());
+			
+			try {
+				FileOutputStream fos = new FileOutputStream(arquivo.Get_Path() + "\\" + arquivo.Get_NomeSecreto());
+				fos.write(file_data);
+				System.out.println("Arquivo Salvo com Sucesso!");
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Falha na escrita do arquivo!");
 			}
 		}
 	}
 
 	public ArrayList<Arquivo> Parse_Index(String path)
 	{
-		String index_data = Decriptar_File(path, "index");
+		String index_data = Autentificador.getInstance().Byte_to_String(Decriptar_File(path, "index"));
 		if(index_data == null)
 		{
 			JOptionPane.showMessageDialog(null, "Index Invalido", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -202,6 +201,11 @@ public class Usuario {
 	
 	public int Get_Acessos()
 	{
-		return BD.Numero_Acessos_Usuario(id);
+		return BD.Numero_Acessos_Usuario(email);
+	}
+	
+	public int Get_Total_Consultas()
+	{
+		return BD.Numero_Consultas_Usuario(email);
 	}
 }

@@ -32,7 +32,6 @@ create table registros(
 	id int not null auto_increment,
     data_ocorrencia datetime not null DEFAULT CURRENT_TIMESTAMP(),
     codigo int,
-    id_usuario int,
 	login_name varchar(255),
     file_name varchar(255),
     
