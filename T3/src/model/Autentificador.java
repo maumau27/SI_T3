@@ -253,11 +253,27 @@ public class Autentificador {
 		return true;
 	}
 	
-	public int Validar_Dados_Cadastro(String certificadoPath, int grupo, int senha, int senhaConfirma)
+	public int Validar_Dados_Cadastro(String certificadoPath, String grupo_str, String senha_str, String senhaConfirma_str)
 	{
+		if(certificadoPath.isEmpty() || grupo_str.isEmpty() || senha_str.isEmpty() || senhaConfirma_str.isEmpty())
+		{
+			JOptionPane.showMessageDialog(null, "Dados Faltando para o cadastro", "Erro", JOptionPane.INFORMATION_MESSAGE);
+			System.out.println("Certificado Invalido");
+			return -1;
+		}
+		
 		X509Certificate certificado = Recuperar_Certificado_Digital(certificadoPath);
 		
 		String SALT = Functions.Get_Random_SALT();
+		
+		int senha = Integer.parseInt(senha_str);
+		int senhaConfirma = Integer.parseInt(senhaConfirma_str);
+		
+		int grupo = 0;
+		if(grupo_str.equals("Administrador"))
+			grupo = 1;
+		if(grupo_str.equals("Usuário"))
+			grupo = 2;
 		
 		if(certificado == null)
 		{
@@ -308,6 +324,7 @@ public class Autentificador {
 		
 		int n = Imprimir_Dados_Certificado(certificado);
 		
+		System.out.println(n);
 		if(n < 1)
 			return -1;
 		
@@ -337,7 +354,7 @@ public class Autentificador {
 		String sujeito = Recuperar_Nome_Certificado(certificado);
 		String _email = Recuperar_Email_Certificado(certificado);
 		
-		String texto = "Usuario Cadastrado com Sucesso!\nDados do Certificado:\n";
+		String texto = "Dados Validados!\nDados do Certificado:\n";
 		texto += "Versão : \t" + Versao + "\n";
 		texto += "Serie : \t" + Serie + "\n";
 		texto += "Validade : \t" + Validade.toString() + "\n";
@@ -346,11 +363,11 @@ public class Autentificador {
 		texto += "Sujeito : \t" + sujeito + "\n";
 		texto += "Email : \t" + _email + "\n";
 		
-		Object[] options = {"Confirmar",
-        "Recusar"};
+		Object[] options = {"Recusar",
+        "Confirmar"};
 		int n = JOptionPane.showOptionDialog(null,
-			"Would you like green eggs and ham?",
-			"A Silly Question",
+			texto,
+			"Confirmação",
 			JOptionPane.YES_NO_OPTION,
 			JOptionPane.QUESTION_MESSAGE,
 			null,     //do not use a custom Icon

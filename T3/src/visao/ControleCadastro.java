@@ -22,6 +22,7 @@ public class ControleCadastro {
 		ic.addCorpo1();
 		addtotalAcesso(ic);
 		addActVoltarMenu(ic);
+		addActCadastro(ic);
 		ic.setVisible();
 	}
 	
@@ -47,14 +48,18 @@ public class ControleCadastro {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String certificadoPath = ic.getField1().getText();
-				int grupo = Integer.parseInt(String.valueOf(ic.getField2().getSelectedItem()));
-				int senha = Integer.parseInt(ic.getField3().getText());
-				int senhaConfirma = Integer.parseInt(ic.getField4().getText());
+				String grupo = String.valueOf(ic.getField2().getSelectedItem());
+				String senha = ic.getField3().getText();
+				String senhaConfirma = ic.getField4().getText();
 				
+				BD.Log(6002, Autentificador.getInstance().Get_LoginName());
 				int retorno = Autentificador.getInstance().Validar_Dados_Cadastro(certificadoPath, grupo, senha, senhaConfirma);
 				
 				if ( retorno == 1) {
 					System.out.println("Usuario Cadastrado com sucesso!");
+					ic.getMenu().dispose();
+					ControleMenu cm = new ControleMenu();
+					cm.callMenu();
 				}
 				
 			}
@@ -63,7 +68,7 @@ public class ControleCadastro {
 	
 	public void addtotalAcesso(InterfaceCadastro ic) {
 		// To do here
-		//ic.setLabeltotalUsuario(BD.Total_Usuarios_Sistema());
+		ic.setLabeltotalUsuario(ic.getLabeltotalUsuario().getText() + BD.Total_Usuarios_Sistema());
 		
 	}
 

@@ -27,12 +27,12 @@ public class MainInterface {
 		
 		//Autentificador.getInstance().Validar_Dados_Cadastro(path, 2, 391694, 391694);
 		
-		path = "C:\\Users\\Maurício\\Desktop\\Puc\\Segurança Da Informação\\SI_T3\\T3\\Pacote-T3\\Keys\\user01-pkcs8-des.pem";
+		path = "C:\\Users\\Maurício\\Desktop\\Puc\\Segurança Da Informação\\SI_T3\\T3\\Pacote-T3\\Keys\\admin-pkcs8-des.pem";
 		
 		Autentificador.getInstance().Iniciar_Validacao();
-		Autentificador.getInstance().Validar_Email("user01@inf1416.puc-rio.br");
+		Autentificador.getInstance().Validar_Email("admin@inf1416.puc-rio.br");
 		Autentificador.getInstance().Validar_Senha(par_digitos);
-		Autentificador.getInstance().Validar_ChavePrivada(path, "user01");
+		Autentificador.getInstance().Validar_ChavePrivada(path, "admin");
 		
 //		ControllerEmail ce = new ControllerEmail();
 //		

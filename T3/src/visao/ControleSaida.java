@@ -17,8 +17,6 @@ public class ControleSaida {
 		addActSair(is);
 		addActSairMenu(is);
 		is.setVisible();
-		
-		
 	}
 	
 	
@@ -28,7 +26,9 @@ public class ControleSaida {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				BD.Log(9003, Usuario.getInstance().Get_Email());
-				is.getMenu().dispose();				
+				BD.Log(1002);
+				is.getMenu().dispose();	
+				System.exit(0);
 			}
 		});
 	}

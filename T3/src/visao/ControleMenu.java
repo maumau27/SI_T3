@@ -23,7 +23,7 @@ public class ControleMenu {
 			addConfigurationsUser(im);
 		}	
 		im.setVisible();
-		if (grupo == "administrador")
+		if (grupo.equals("administrador"))
 			addActBottom1(im);
 		addActBottom2(im);
 		addActBottom3(im);
@@ -88,7 +88,6 @@ public class ControleMenu {
 	}
 	
 	public void addConfigurationsAdm(InterfaceMenu i) {
-		System.out.println("Oi");
 		i.getLogin().setText(i.getLogin().getText() + Usuario.getInstance().Get_Email());
 		i.getGrupo().setText(i.getGrupo().getText() +  Usuario.getInstance().Get_Grupo());
 		i.getNome().setText(i.getNome().getText() + Usuario.getInstance().Get_Nome());

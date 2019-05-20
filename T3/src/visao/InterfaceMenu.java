@@ -103,7 +103,7 @@ public class InterfaceMenu {
 		setConfigurationsOfPanels();
 		fillCabecalho();
 		fillAcessos();
-		if ( grupo == "ADMINISTRADOR") {
+		if ( grupo.equals("administrador")) {
 			fillButtonsAdm();
 		} else {
 			fillButtonsUser();

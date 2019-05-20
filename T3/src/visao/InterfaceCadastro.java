@@ -93,7 +93,7 @@ public class InterfaceCadastro {
 		corpo1 = new JPanel();
 		corpo1.setLayout(new BorderLayout());
 	    corpo1.setPreferredSize(new Dimension(200,200));
-		labeltotalUsuarios = new JLabel("Total de consultas do usuário:");
+		labeltotalUsuarios = new JLabel("Total de usuários no sistema:");
 		labeltotalUsuarios.setFont(new Font("Dialog", Font.BOLD, 15));
 		corpo1.add(labeltotalUsuarios , BorderLayout.CENTER);
 		menu.add(corpo1 , BorderLayout.CENTER);
@@ -104,8 +104,8 @@ public class InterfaceCadastro {
 	}
 
 
-	public void setLabeltotalUsuario(JLabel labeltotalUsuario) {
-		this.labeltotalUsuarios = labeltotalUsuario;
+	public void setLabeltotalUsuario(String texto) {
+		this.labeltotalUsuarios.setText(texto);
 	}
 
 
