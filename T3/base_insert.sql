@@ -23,7 +23,7 @@ URKDWWg2XbZpuTO7IhxTYKwddKvsJTjizHIz6mi6JavHM7+xtB/ZvQaW04O9y5QI
 HtNmSvQW9Uow3g==
 -----END CERTIFICATE-----", "f5a5b1db3620b032a123b0b9ca57acf38cd563fc", 1, "ABCDEFGHIJ");
 
-insert into usuarios (login_name, nome, certificado_digital, senha, id_grupo, SALT) values ("user01@inf1416.puc-rio.br", "Usuario 01", "-----BEGIN CERTIFICATE-----
+/*insert into usuarios (login_name, nome, certificado_digital, senha, id_grupo, SALT) values ("user01@inf1416.puc-rio.br", "Usuario 01", "-----BEGIN CERTIFICATE-----
  MIID9DCCAtygAwIBAgIBAjANBgkqhkiG9w0BAQsFADCBhDELMAkGA1UEBhMCQlIx
  CzAJBgNVBAgMAlJKMQwwCgYDVQQHDANSaW8xDDAKBgNVBAoMA1BVQzEQMA4GA1UE
  CwwHSU5GMTQxNjETMBEGA1UEAwwKQUMgSU5GMTQxNjElMCMGCSqGSIb3DQEJARYW
@@ -46,7 +46,7 @@ insert into usuarios (login_name, nome, certificado_digital, senha, id_grupo, SA
  Ax+iKCB+K60b7XCtXqtT9hQofHG1bYFHccXOw+XvincDoFSOHzaO2CGNuNtZSLjN
  oQipjRfepc1JSrZHBsrf153adBQ1Zm1Z6g6dOzf1NNFkcsKmiGmU4vb8OvxBU6Yy
  RtzgBEGf/eg=
- -----END CERTIFICATE-----", "f5a5b1db3620b032a123b0b9ca57acf38cd563fc", 2, "ABCDEFGHIJ");
+ -----END CERTIFICATE-----", "f5a5b1db3620b032a123b0b9ca57acf38cd563fc", 2, "ABCDEFGHIJ");*/
 
 insert into grupos (nome) values ("administrador");
 insert into grupos (nome) values ("usuario");
