@@ -39,7 +39,7 @@ public class ControleConsulta {
 				BD.Log(8003, Usuario.getInstance().Get_Email());
 				ArrayList<Arquivo> arquivos = Usuario.getInstance().Parse_Index(ic.getCampoPasta().getText());
 				ic.addArchivestoTable(arquivos);
-				addActClick(ic.getTable(), arquivos);
+				addActClick(ic.getTable(), arquivos,ic);
 				ic.getMenuList().setVisible(true);
 			}
 		});
@@ -53,6 +53,8 @@ public class ControleConsulta {
 				BD.Log(8002, Usuario.getInstance().Get_Email());
 				
 				ic.getMenu().dispose();
+				if (ic.getMenuList() != null )
+					ic.getMenuList().dispose();
 				ControleMenu cm = new ControleMenu();
 				cm.callMenu();
 				
@@ -60,7 +62,7 @@ public class ControleConsulta {
 		});
 	}
 	
-	public void addActClick(JTable table , ArrayList<Arquivo> arquivos) {	
+	public void addActClick(JTable table , ArrayList<Arquivo> arquivos, InterfaceConsulta ic) {	
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			
 			@Override
