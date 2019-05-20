@@ -198,7 +198,6 @@ public class BD {
 	public static void Atualizar_Senha_Usuario(int id, String senha, String SALT)
 	{
 		String query = "UPDATE usuarios SET senha = '" + senha + "', SALT ='" + SALT + "'  WHERE id =" + id;
-		System.out.println(query);
 		try {
 		    PreparedStatement pstmt = connection.prepareStatement(query);
 		    pstmt.executeUpdate();

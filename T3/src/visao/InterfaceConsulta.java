@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
 import model.Arquivo;
@@ -170,6 +171,6 @@ public class InterfaceConsulta {
 		}
 		
 		sPane.getViewport().add(table);
-		corpo2.add(sPane);
+		corpo2.add(sPane, BorderLayout.SOUTH);
 	}
 }
