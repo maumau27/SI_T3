@@ -1,9 +1,16 @@
 package visao;
 
+import java.awt.BorderLayout;
+import java.awt.LayoutManager;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
+import model.Arquivo;
 import model.Autentificador;
 import model.BD;
 import model.Par_Digitos;
@@ -43,14 +50,8 @@ public class MainInterface {
 		Autentificador.getInstance().Validar_Senha(par_digitos);
 		Autentificador.getInstance().Validar_ChavePrivada(path, "user01");*/
 		
-		ControleMenu ce = new ControleMenu();
-		
-		ce.callMenu();
-		
-		
-		
-//		ControleMenu cm = new ControleMenu();
-//		cm.callMenu();
+		ControleMenu cm = new ControleMenu();
+		cm.callMenu();
 		
 
 	}

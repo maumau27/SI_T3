@@ -40,6 +40,7 @@ public class ControleConsulta {
 				ArrayList<Arquivo> arquivos = Usuario.getInstance().Parse_Index(ic.getCampoPasta().getText());
 				ic.addArchivestoTable(arquivos);
 				addActClick(ic.getTable(), arquivos);
+				ic.getMenuList().setVisible(true);
 			}
 		});
 	}
