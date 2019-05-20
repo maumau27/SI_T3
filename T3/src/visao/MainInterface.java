@@ -2,6 +2,8 @@ package visao;
 
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+
 import model.Autentificador;
 import model.BD;
 import model.Par_Digitos;
@@ -34,13 +36,11 @@ public class MainInterface {
 		Autentificador.getInstance().Validar_Senha(par_digitos);
 		Autentificador.getInstance().Validar_ChavePrivada(path, "admin");
 		
-//		ControllerEmail ce = new ControllerEmail();
-//		
-//		ce.callInterfaceEmail();
+		ControleMenu ce = new ControleMenu();
 		
-		ControleMenu cc = new ControleMenu();
+		ce.callMenu();
 		
-		cc.callMenu();
+		
 		
 //		ControleMenu cm = new ControleMenu();
 //		cm.callMenu();

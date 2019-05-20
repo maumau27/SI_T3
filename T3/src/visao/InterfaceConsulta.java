@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -28,6 +29,7 @@ public class InterfaceConsulta {
 	private JButton listar , sair;
 	private JTable table;
 	private JLabel totalConsultas;
+	private JScrollPane sPane ;
 	
 	
 	public InterfaceConsulta() {
@@ -147,7 +149,8 @@ public class InterfaceConsulta {
 		menu.setVisible(true);
 	}
 	
-	public void addArchivestoTable(ArrayList<Arquivo> arquivos) {		
+	public void addArchivestoTable(ArrayList<Arquivo> arquivos) {	
+		sPane = new JScrollPane();
 		DefaultTableModel model = new DefaultTableModel(); 
 		table = new JTable(model); 
 		String[] listRow = new String[4];
@@ -165,5 +168,8 @@ public class InterfaceConsulta {
 			model.addRow(listRow);
 			listRow = new String[4];
 		}
+		
+		sPane.getViewport().add(table);
+		corpo2.add(sPane);
 	}
 }
