@@ -43,10 +43,12 @@ public class MainInterface {
 		Autentificador.getInstance().Validar_Senha(par_digitos);
 		Autentificador.getInstance().Validar_ChavePrivada(path, "user01");*/
 		
-		ControleMenu ce = new ControleMenu();
+		//ControleMenu ce = new ControleMenu();
 		
-		ce.callMenu();
+		//ce.callMenu();
 		
+		ControllerEmail e = new ControllerEmail();
+		e.callInterfaceEmail();
 		
 		
 //		ControleMenu cm = new ControleMenu();

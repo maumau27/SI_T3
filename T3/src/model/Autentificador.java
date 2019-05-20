@@ -242,6 +242,23 @@ public class Autentificador {
 		return -1;
 	}
 	
+	private int ChavePrivada_Invalida(String texto)
+	{
+		JOptionPane.showMessageDialog(null, texto, "Erro", JOptionPane.INFORMATION_MESSAGE);
+		System.out.println("Acesso Negado : Chave privada invalida");
+		erros_chave_privada -= 1;
+		if(erros_chave_privada <= 0)
+		{
+			BD.Log(4007, login_name);
+			JOptionPane.showMessageDialog(null, "Usuario Bloqueado : Numero de tentativas maximo execidida", "Erro", JOptionPane.ERROR_MESSAGE);
+			System.out.println("Usuario Bloqueado : Numero de tentativas maximo execidida");
+			BD.Bloquear_Usuario(id);
+			current_state = State.BLOQUEADO;
+			return -2;
+		}
+		return -1;
+	}
+	
 	private boolean Validar_Formato_Email(String email)
 	{
 		//checar se não existem ' no email e se ele está num formato aceitavel
@@ -585,6 +602,7 @@ public class Autentificador {
 			BD.Log(4005, login_name);
 		}
 		catch (Exception e) {
+			BD.Log(4004, login_name);
 			e.printStackTrace();
 		}
 
