@@ -147,9 +147,11 @@ public class Usuario {
 				FileOutputStream fos = new FileOutputStream(arquivo.Get_Path() + "\\" + arquivo.Get_NomeSecreto());
 				fos.write(file_data);
 				System.out.println("Arquivo Salvo com Sucesso!");
+				JOptionPane.showMessageDialog(null, "Arquivo Salvo com Sucesso!", "Erro", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("Falha na escrita do arquivo!");
+				JOptionPane.showMessageDialog(null, "Falha na escrita do arquivo" , "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
