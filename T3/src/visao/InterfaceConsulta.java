@@ -25,6 +25,7 @@ import model.Usuario;
 public class InterfaceConsulta {
 
 	private JFrame menu;
+	private JFrame menuList;
 	private JPanel cabecalho , corpo1 , corpo2;
 	private JTextField campoPasta;
 	private JButton listar , sair;
@@ -97,7 +98,7 @@ public class InterfaceConsulta {
 		corpo1 = new JPanel();
 		corpo1.setLayout(new BorderLayout());
 	    corpo1.setPreferredSize(new Dimension(200,200));
-		totalConsultas = new JLabel("Total de consultas do usuário:");
+		totalConsultas = new JLabel("Total de consultas do usuï¿½rio:");
 		totalConsultas.setFont(new Font("Dialog", Font.BOLD, 15));
 		corpo1.add(totalConsultas , BorderLayout.CENTER);
 		menu.add(corpo1 , BorderLayout.CENTER);
@@ -151,6 +152,14 @@ public class InterfaceConsulta {
 	}
 	
 	public void addArchivestoTable(ArrayList<Arquivo> arquivos) {	
+		menuList = new JFrame();
+		menuList.setLayout(new BorderLayout());
+		menuList.setSize(600,600);
+		menuList.setLocationRelativeTo(null);
+		JPanel corpoMenu = new JPanel();
+		menu.add( corpoMenu  , BorderLayout.SOUTH);
+		corpoMenu .setLayout(new BorderLayout());
+		menu.add( corpoMenu );
 		sPane = new JScrollPane();
 		DefaultTableModel model = new DefaultTableModel(); 
 		table = new JTable(model); 
@@ -171,6 +180,14 @@ public class InterfaceConsulta {
 		}
 		
 		sPane.getViewport().add(table);
-		corpo2.add(sPane, BorderLayout.SOUTH);
+		corpoMenu.add(sPane);
+	}
+
+	public JFrame getMenuList() {
+		return menuList;
+	}
+
+	public void setMenuList(JFrame menuList) {
+		this.menuList = menuList;
 	}
 }
