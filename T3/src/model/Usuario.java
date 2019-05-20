@@ -1,5 +1,6 @@
 package model;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.security.PrivateKey;
@@ -58,10 +59,9 @@ public class Usuario {
 		byte[] envelope_digital = Autentificador.getInstance().Ler_File_Bin(path + "\\" + name + ".env");
 		byte[] assinatura_digital = Autentificador.getInstance().Ler_File_Bin(path + "\\" + name + ".asd");
 		
-		if(index_crypt == null || envelope_digital == null || assinatura_digital == null)
+		if(envelope_digital == null || assinatura_digital == null)
 		{
-			BD.Log(8004, email);
-			JOptionPane.showMessageDialog(null, "Caminho invalido", "Erro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Arquivos de validação faltando", "Erro", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
 		
@@ -147,7 +147,7 @@ public class Usuario {
 				FileOutputStream fos = new FileOutputStream(arquivo.Get_Path() + "\\" + arquivo.Get_NomeSecreto());
 				fos.write(file_data);
 				System.out.println("Arquivo Salvo com Sucesso!");
-				JOptionPane.showMessageDialog(null, "Arquivo Salvo com Sucesso!", "Erro", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Arquivo " +  arquivo.Get_NomeSecreto() + " Salvo com Sucesso!", "Erro", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("Falha na escrita do arquivo!");
@@ -158,12 +158,20 @@ public class Usuario {
 
 	public ArrayList<Arquivo> Parse_Index(String path)
 	{
-		String index_data = Autentificador.getInstance().Byte_to_String(Decriptar_File(path, "index"));
-		if(index_data == null)
+		byte[] index_crypt = Autentificador.getInstance().Ler_File_Bin(path + "\\index.enc");
+		if(index_crypt == null)
 		{
-			JOptionPane.showMessageDialog(null, "Index Invalido", "Erro", JOptionPane.ERROR_MESSAGE);
-			System.out.println("Index Invalido");
+			BD.Log(8004, email);
+			JOptionPane.showMessageDialog(null, "Caminho invalido", "Erro", JOptionPane.ERROR_MESSAGE);
+			return null;
 		}
+		byte[] index_data_bytes = Decriptar_File(path, "index");
+		if(index_data_bytes == null)
+		{
+			return null;
+		}
+		
+		String index_data = Autentificador.getInstance().Byte_to_String(index_data_bytes);
 		
 		ArrayList<Arquivo> sistema_files = new ArrayList<Arquivo>();
 		String[] arquivos = index_data.split("\n");
@@ -189,6 +197,8 @@ public class Usuario {
 			return true;
 		}
 		BD.Log(8012, email, arquivo.Get_NomeCodigo());
+		JOptionPane.showMessageDialog(null, "Usuario não tem acesso ao Arquivo", "Erro", JOptionPane.ERROR_MESSAGE);
+		System.out.println("Usuario não tem acesso ao Arquivo");
 		return false;
 	}
 	

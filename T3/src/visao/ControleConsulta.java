@@ -38,9 +38,17 @@ public class ControleConsulta {
 			public void actionPerformed(ActionEvent arg0) {
 				BD.Log(8003, Usuario.getInstance().Get_Email());
 				ArrayList<Arquivo> arquivos = Usuario.getInstance().Parse_Index(ic.getCampoPasta().getText());
-				ic.addArchivestoTable(arquivos);
-				addActClick(ic.getTable(), arquivos,ic);
-				ic.getMenuList().setVisible(true);
+				if(arquivos != null)
+				{
+					BD.Log(8009, Usuario.getInstance().Get_Email());
+					ic.addArchivestoTable(arquivos);
+					addActClick(ic.getTable(), arquivos,ic);
+					ic.getMenuList().setVisible(true);
+				}
+				else
+				{
+					
+				}
 			}
 		});
 	}
@@ -70,6 +78,7 @@ public class ControleConsulta {
 			{
 				int position = table.getSelectedRow();
 				Arquivo a = arquivos.get(position);
+				BD.Log(8010, Usuario.getInstance().Get_Email(), a.Get_NomeCodigo());
 				Usuario.getInstance().Decriptar_Arquivo(a);
 			}
 				
