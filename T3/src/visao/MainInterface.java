@@ -1,16 +1,9 @@
 package visao;
 
-import java.awt.BorderLayout;
-import java.awt.LayoutManager;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
-import model.Arquivo;
 import model.Autentificador;
 import model.BD;
 import model.Par_Digitos;
@@ -38,20 +31,28 @@ public class MainInterface {
 		
 		path = "C:\\Users\\Maurício\\Desktop\\Puc\\Segurança Da Informação\\SI_T3\\T3\\Pacote-T3\\Keys\\admin-pkcs8-des.pem";
 
-		Autentificador.getInstance().Iniciar_Validacao();
+		/*Autentificador.getInstance().Iniciar_Validacao();
 		Autentificador.getInstance().Validar_Email("admin@inf1416.puc-rio.br");
 		Autentificador.getInstance().Validar_Senha(par_digitos);
-		Autentificador.getInstance().Validar_ChavePrivada(path, "admin"); 
+		Autentificador.getInstance().Validar_ChavePrivada(path, "admin"); */
 		
 		path = "C:\\Users\\Maurício\\Desktop\\Puc\\Segurança Da Informação\\SI_T3\\T3\\Pacote-T3\\Keys\\user01-pkcs8-des.pem";
 		
-		/*Autentificador.getInstance().Iniciar_Validacao();
+		Autentificador.getInstance().Iniciar_Validacao();
 		Autentificador.getInstance().Validar_Email("user01@inf1416.puc-rio.br");
 		Autentificador.getInstance().Validar_Senha(par_digitos);
-		Autentificador.getInstance().Validar_ChavePrivada(path, "user01");*/
+		Autentificador.getInstance().Validar_ChavePrivada(path, "user01");
 		
-		ControleMenu cm = new ControleMenu();
-		cm.callMenu();
+		ControleMenu ce = new ControleMenu();
+		
+		ce.callMenu();
+		
+		//ControllerEmail e = new ControllerEmail();
+		//e.callInterfaceEmail();
+		
+		
+//		ControleMenu cm = new ControleMenu();
+//		cm.callMenu();
 		
 
 	}

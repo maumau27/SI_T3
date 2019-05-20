@@ -98,7 +98,7 @@ public class InterfaceConsulta {
 		corpo1 = new JPanel();
 		corpo1.setLayout(new BorderLayout());
 	    corpo1.setPreferredSize(new Dimension(200,200));
-		totalConsultas = new JLabel("Total de consultas do usu�rio:");
+		totalConsultas = new JLabel("Total de consultas do usuario:");
 		totalConsultas.setFont(new Font("Dialog", Font.BOLD, 15));
 		corpo1.add(totalConsultas , BorderLayout.CENTER);
 		menu.add(corpo1 , BorderLayout.CENTER);
@@ -157,9 +157,9 @@ public class InterfaceConsulta {
 		menuList.setSize(600,600);
 		menuList.setLocationRelativeTo(null);
 		JPanel corpoMenu = new JPanel();
-		menu.add( corpoMenu  , BorderLayout.SOUTH);
+		menuList.add( corpoMenu  , BorderLayout.SOUTH);
 		corpoMenu .setLayout(new BorderLayout());
-		menu.add( corpoMenu );
+		menuList.add( corpoMenu );
 		sPane = new JScrollPane();
 		DefaultTableModel model = new DefaultTableModel(); 
 		table = new JTable(model); 
