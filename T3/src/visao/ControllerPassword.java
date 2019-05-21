@@ -15,13 +15,12 @@ import model.Functions;
 import model.Par_Digitos;
 
 public class ControllerPassword {
-
-	private int numberClicks = 0;
+	
 	private ArrayList<Par_Digitos> atualValues;
 	
 	public void callInterfacePassword() {
 		InterfacePassword ip = new InterfacePassword(5);
-		atualValues = new ArrayList<Par_Digitos>(5);
+		atualValues = new ArrayList<Par_Digitos>();
 		addValueAndActionToButton(ip);
 		AddActButtonSend(ip);
 		addActResetButton(ip);
@@ -56,8 +55,7 @@ public class ControllerPassword {
 		i.getReset().addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 	        {	     
-				numberClicks = 0;
-				atualValues = new ArrayList<Par_Digitos>(5);
+				atualValues = new ArrayList<Par_Digitos>();
 	        }
 			});
 	}
@@ -89,6 +87,10 @@ public class ControllerPassword {
 			public void actionPerformed(ActionEvent e) {
 				int validarSenha = Autentificador.getInstance().Validar_Senha(atualValues);
 				
+				if ( validarSenha == -1)
+				{
+					atualValues = new ArrayList<Par_Digitos>();
+				}
 				if ( validarSenha == -2) {
 					BD.Log(3002, Autentificador.getInstance().Get_LoginName());
 					i.getScreen().dispose();

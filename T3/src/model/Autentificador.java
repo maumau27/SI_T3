@@ -133,6 +133,11 @@ public class Autentificador {
 			return -1;
 		}
 		
+		if(par_digitos.size() > 8)
+		{
+			return Senha_Invalida();
+		}
+		
 		//valida a senha
 		String senha = BD.Get_Senha_by_Id(id);
 		String SALT = BD.Get_Salt_by_Id(id);
