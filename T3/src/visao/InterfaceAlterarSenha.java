@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import model.BD;
@@ -128,7 +129,7 @@ public class InterfaceAlterarSenha {
 
 
 	public void setTextPassword() {
-		password = new JTextField();
+		password = new JPasswordField();
 		password.setDocument(new TamanhoFixoJText(8));
 	}
 	public JButton getVoltarMenu() {
@@ -142,7 +143,7 @@ public class InterfaceAlterarSenha {
 
 
 	public void setTextRepeteadPassword() {
-		repeatedPassword = new JTextField();
+		repeatedPassword = new JPasswordField();
 		repeatedPassword.setDocument(new TamanhoFixoJText(8));
 	}
 	

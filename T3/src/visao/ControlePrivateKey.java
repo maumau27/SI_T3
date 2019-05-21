@@ -78,6 +78,7 @@ public class ControlePrivateKey {
 				int retorno = Autentificador.getInstance().Validar_ChavePrivada(pathPrivateKeySelected, ic.getSenhaSecreta().getText());
 				
 				if (retorno == -2) {
+					BD.Log(4002, Autentificador.getInstance().Get_LoginName());
 					ic.getScreen().dispose();
 					ControllerEmail ce = new ControllerEmail();
 					ce.callInterfaceEmail();

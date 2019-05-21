@@ -89,17 +89,14 @@ public class ControllerPassword {
 			public void actionPerformed(ActionEvent e) {
 				int validarSenha = Autentificador.getInstance().Validar_Senha(atualValues);
 				
-				if(validarSenha == 1)
-				{
-					BD.Log(3002, Autentificador.getInstance().Get_LoginName());
-				}
-				
 				if ( validarSenha == -2) {
+					BD.Log(3002, Autentificador.getInstance().Get_LoginName());
 					i.getScreen().dispose();
 					ControllerEmail ce =  new ControllerEmail();
 					ce.callInterfaceEmail();				
 				}
 				if (validarSenha == 1) {
+					BD.Log(3002, Autentificador.getInstance().Get_LoginName());
 					i.getScreen().dispose();
 					ControlePrivateKey cc = new ControlePrivateKey();
 					cc.callControllerCertificado();

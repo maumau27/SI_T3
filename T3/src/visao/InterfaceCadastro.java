@@ -13,6 +13,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import model.BD;
@@ -121,8 +122,8 @@ public class InterfaceCadastro {
 		label4 = new JLabel("Repeat Password");
 		field1 = new JTextField(255);
 		field2 = new JComboBox<String>(messages);
-		field3 = new JTextField(8);
-		field4 = new JTextField(8);
+		field3 = new JPasswordField (8);
+		field4 = new JPasswordField(8);
 		corpo2.add(label1);
 		corpo2.add(field1);
 		corpo2.add(label2);

@@ -359,9 +359,9 @@ public class BD {
 	
 	public static void Print_Logs()
 	{
-		String query = "SELECT registros.data_ocorrencia, REPLACE(REPLACE(mensagens.mensagem, '<login_name>', registros.login_name), '<arq_name>', registros.file_name) as Mensagem\r\n" + 
-				"FROM registros \r\n" + 
-				"INNER JOIN mensagens \r\n" + 
+		String query = "SELECT registros.data_ocorrencia, REPLACE(REPLACE(mensagens.mensagem, '<login_name>', registros.login_name), '<arq_name>', registros.file_name) " + 
+				"FROM registros " + 
+				"INNER JOIN mensagens " + 
 				"ON registros.codigo = mensagens.codigo order by data_ocorrencia;";
 		ResultSet rs = Run_Query(query);
 		try {
@@ -369,6 +369,28 @@ public class BD {
 			while(rs.next())
 			{
 				System.out.println(i + "\t" + rs.getString(1) + "\t" + rs.getString(2));
+				i++;
+			}
+			rs.close();
+					
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Connexão Falhou");
+		}
+	}
+	
+	public static void Print_Logs2()
+	{
+		String query = "select data_ocorrencia, login_name, file_name, mensagem from registros join mensagens where mensagens.codigo = registros.codigo";
+		ResultSet rs = Run_Query(query);
+		try {
+			int i = 1;
+			while(rs.next())
+			{
+				String mensagem = rs.getString(4);
+				mensagem = mensagem.replaceAll("<login_name>", rs.getString(2));
+				mensagem = mensagem.replaceAll("<arq_name>", rs.getString(3));
+				System.out.println(i + "\t" + rs.getString(1) + "\t" + mensagem);
 				i++;
 			}
 			rs.close();
